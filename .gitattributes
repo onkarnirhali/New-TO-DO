@@ -1,0 +1,16 @@
+# Auto-detect text files and normalise line endings to LF in the repo.
+# Git will convert LF → CRLF on checkout on Windows, and CRLF → LF on commit.
+# This means the repo always stores LF, developers always get the right endings.
+* text=auto eol=lf
+
+# Explicitly mark binary files — Git should never try to diff these
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.woff binary
+*.woff2 binary
+
+# Shell scripts must always be LF — bash will break with CRLF
+*.sh text eol=lf
