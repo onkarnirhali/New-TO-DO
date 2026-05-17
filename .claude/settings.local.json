@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash \"C:/Users/onkar/.claude/skills/brainstorming/scripts/start-server.sh\" --project-dir \"c:/Data/Projects/New Todo\")",
+      "Bash(python3 \"C:/Users/onkar/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"productivity kanban notes dark bold modern premium cross-platform\" --design-system -p \"Planote\" -f markdown)",
+      "Bash(dir \"C:\\\\Users\\\\onkar\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\")",
+      "Bash(dir \"C:\\\\Users\\\\onkar\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\data\")"
+    ]
+  }
+}

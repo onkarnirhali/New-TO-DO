@@ -1,0 +1,56 @@
+services:
+
+  # ── PostgreSQL ─────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: planote-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: planote
+      POSTGRES_PASSWORD: planote_dev
+      POSTGRES_DB: planote
+    ports:
+      - "5432:5432"
+    volumes:
+      # Persist data across container restarts
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      # Wait until Postgres is actually ready to accept connections
+      # (not just "container started" — Postgres has an init phase)
+      test: ["CMD-SHELL", "pg_isready -U planote -d planote"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Redis ─────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: planote-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── pgAdmin (optional — visual DB browser) ─────────────────────────
+  # Uncomment if you want a GUI to browse the database
+  # pgadmin:
+  #   image: dpage/pgadmin4:latest
+  #   container_name: planote-pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@planote.dev
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

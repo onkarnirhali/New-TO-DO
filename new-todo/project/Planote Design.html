@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Planote — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root { width: 100%; height: 100%; overflow: hidden; background: #0a0a10; }
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2E2E4A; border-radius: 3px; }
+  textarea, input { font-family: 'Inter', system-ui, sans-serif !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Load component files in dependency order -->
+<script type="text/babel" src="planote-icons.jsx"></script>
+<script type="text/babel" src="planote-shared.jsx"></script>
+<script type="text/babel" src="planote-auth.jsx"></script>
+<script type="text/babel" src="planote-web.jsx"></script>
+<script type="text/babel" src="planote-modals.jsx"></script>
+<script type="text/babel" src="planote-mobile.jsx"></script>
+<script type="text/babel" src="planote-misc.jsx"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "showLightMode": false,
+  "showMobileScreens": true,
+  "showAdminPanel": true
+}/*EDITMODE-END*/;
+
+const App = () => {
+  const [tweaks, setTweaksState] = React.useState(TWEAK_DEFAULTS);
+
+  const setTweak = (key, val) => {
+    const next = typeof key === 'object' ? { ...tweaks, ...key } : { ...tweaks, [key]: val };
+    setTweaksState(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
+  };
+
+  // Tweaks panel protocol
+  const [tweaksOpen, setTweaksOpen] = React.useState(false);
+  React.useEffect(() => {
+    const handler = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksOpen(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksOpen(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const D = DARK;
+  const L = LIGHT;
+
+  return (
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <DesignCanvas title="Planote — Design System">
+
+        {/* ── SECTION 1: Authentication ─────────────────────────────────── */}
+        <DCSection id="s1" title="Authentication">
+          <DCArtboard id="login-dark" label="Login — Dark" width={480} height={720}>
+            <AuthScreen t={D}/>
+          </DCArtboard>
+          <DCArtboard id="login-light" label="Login — Light" width={480} height={720}>
+            <AuthScreen t={L}/>
+          </DCArtboard>
+          <DCArtboard id="signup-dark" label="Sign Up — Dark" width={480} height={780}>
+            <SignUpScreen t={D}/>
+          </DCArtboard>
+          <DCArtboard id="signup-light" label="Sign Up — Light" width={480} height={780}>
+            <SignUpScreen t={L}/>
+          </DCArtboard>
+          <DCArtboard id="forgot-dark" label="Forgot Password — Dark" width={480} height={560}>
+            <ForgotScreen t={D}/>
+          </DCArtboard>
+          <DCArtboard id="forgot-success" label="Reset Sent — Dark" width={480} height={560}>
+            <ForgotScreen t={D} success={true}/>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 2: Onboarding ─────────────────────────────────────── */}
+        <DCSection id="s2" title="Onboarding — First Run">
+          <DCArtboard id="ob-step1-dark" label="Step 1 — Welcome (Dark)" width={480} height={660}>
+            <OnboardStep1 t={D}/>
+          </DCArtboard>
+          <DCArtboard id="ob-step1-light" label="Step 1 — Welcome (Light)" width={480} height={660}>
+            <OnboardStep1 t={L}/>
+          </DCArtboard>
+          <DCArtboard id="ob-step2-dark" label="Step 2 — Dashboard Setup" width={480} height={620}>
+            <OnboardStep2 t={D}/>
+          </DCArtboard>
+          <DCArtboard id="ob-step2-light" label="Step 2 — Dashboard Setup (Light)" width={480} height={620}>
+            <OnboardStep2 t={L}/>
+          </DCArtboard>
+          <DCArtboard id="ob-step3-dark" label="Step 3 — Choose Theme" width={480} height={580}>
+            <OnboardStep3 t={D}/>
+          </DCArtboard>
+          <DCArtboard id="ob-step3-light" label="Step 3 — Choose Theme (Light)" width={480} height={580}>
+            <OnboardStep3 t={L}/>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 3: Web Dashboard ──────────────────────────────────── */}
+        <DCSection id="s3" title="Web App — Dashboard (1440px)">
+          <DCArtboard id="dash-dark" label="Dashboard — Dark Mode" width={1440} height={900}>
+            <WebDashboard t={D}/>
+          </DCArtboard>
+          <DCArtboard id="dash-light" label="Dashboard — Light Mode" width={1440} height={900}>
+            <WebDashboard t={L}/>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 4: Task Flows ─────────────────────────────────────── */}
+        <DCSection id="s4" title="Task Creation &amp; Detail">
+          <DCArtboard id="task-modal-dark" label="New Task Modal — Dark" width={900} height={700}>
+            <TaskModal t={D}/>
+          </DCArtboard>
+          <DCArtboard id="task-modal-light" label="New Task Modal — Light" width={900} height={700}>
+            <TaskModal t={L}/>
+          </DCArtboard>
+          <DCArtboard id="task-detail-dark" label="Task Detail Panel — Dark" width={520} height={820}>
+            <TaskDetail t={D}/>
+          </DCArtboard>
+          <DCArtboard id="task-detail-light" label="Task Detail Panel — Light" width={520} height={820}>
+            <TaskDetail t={L}/>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 5: Notes ──────────────────────────────────────────── */}
+        <DCSection id="s5" title="Notes — Grid &amp; Editor">
+          <DCArtboard id="notes-dark" label="Notes Grid — Dark" width={1440} height={900}>
+            <NotesGrid t={D}/>
+          </DCArtboard>
+          <DCArtboard id="notes-light" label="Notes Grid — Light" width={1440} height={900}>
+            <NotesGrid t={L}/>
+          </DCArtboard>
+          <DCArtboard id="editor-dark" label="Note Editor — Dark" width={1440} height={900}>
+            <NoteEditor t={D}/>
+          </DCArtboard>
+          <DCArtboard id="editor-light" label="Note Editor — Light" width={1440} height={900}>
+            <NoteEditor t={L}/>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 6: Mobile (390×844) ───────────────────────────────── */}
+        <DCSection id="s6" title="Mobile — iOS/Android (390×844)">
+          <DCArtboard id="mob-boards-dark" label="Boards — Dark" width={390} height={844}>
+            <MobileBoards t={D}/>
+          </DCArtboard>
+          <DCArtboard id="mob-boards-light" label="Boards — Light" width={390} height={844}>
+            <MobileBoards t={L}/>
+          </DCArtboard>
+          <DCArtboard id="mob-sheet-dark" label="Task Creation Sheet — Dark" width={390} height={844}>
+            <MobileTaskSheet t={D}/>
+          </DCArtboard>
+          <DCArtboard id="mob-sheet-light" label="Task Creation Sheet — Light" width={390} height={844}>
+            <MobileTaskSheet t={L}/>
+          </DCArtboard>
+          <DCArtboard id="mob-notes-dark" label="Notes Grid — Dark" width={390} height={844}>
+            <MobileNotes t={D}/>
+          </DCArtboard>
+          <DCArtboard id="mob-notes-light" label="Notes Grid — Light" width={390} height={844}>
+            <MobileNotes t={L}/>
+          </DCArtboard>
+          <DCArtboard id="mob-editor-dark" label="Note Editor — Dark" width={390} height={844}>
+            <MobileNoteEditor t={D}/>
+          </DCArtboard>
+          <DCArtboard id="mob-editor-light" label="Note Editor — Light" width={390} height={844}>
+            <MobileNoteEditor t={L}/>
+          </DCArtboard>
+          <DCArtboard id="mob-search-dark" label="Search — Dark" width={390} height={844}>
+            <MobileSearch t={D}/>
+          </DCArtboard>
+          <DCArtboard id="mob-search-light" label="Search — Light" width={390} height={844}>
+            <MobileSearch t={L}/>
+          </DCArtboard>
+          <DCArtboard id="mob-location" label="Location Reminder Sheet" width={390} height={844}>
+            <LocationSheet t={D}/>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 7: Paywall & Settings ─────────────────────────────── */}
+        <DCSection id="s7" title="Paywall &amp; Settings">
+          <DCArtboard id="paywall-inline-dark" label="Inline Paywall — Dark" width={400} height={600}>
+            <div style={{ width: 400, height: 600, background: DARK.bgBase, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+              <InlinePaywall t={D}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="paywall-inline-light" label="Inline Paywall — Light" width={400} height={600}>
+            <div style={{ width: 400, height: 600, background: LIGHT.bgBase, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+              <InlinePaywall t={L}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="paywall-full-dark" label="Subscription Page — Dark" width={860} height={820}>
+            <div style={{ width: 860, height: 820, background: DARK.bgBase, display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+              <SubscriptionPage t={D}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="paywall-full-light" label="Subscription Page — Light" width={860} height={820}>
+            <div style={{ width: 860, height: 820, background: LIGHT.bgBase, display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+              <SubscriptionPage t={L}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="settings-dark" label="Settings — Dark" width={680} height={720}>
+            <div style={{ width: 680, height: 720, background: DARK.bgBase, overflowY: 'auto' }}>
+              <SettingsScreen t={D}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="settings-light" label="Settings — Light" width={680} height={720}>
+            <div style={{ width: 680, height: 720, background: LIGHT.bgBase, overflowY: 'auto' }}>
+              <SettingsScreen t={L}/>
+            </div>
+          </DCArtboard>
+        </DCSection>
+
+        {/* ── SECTION 8: Admin, Toasts, Empty States ────────────────────── */}
+        <DCSection id="s8" title="Admin, Components &amp; Empty States">
+          <DCArtboard id="admin-dark" label="Admin Panel — Dark" width={1100} height={700}>
+            <div style={{ width: 1100, height: 700, background: DARK.bgBase, overflowY: 'auto' }}>
+              <AdminPanel t={D}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="admin-light" label="Admin Panel — Light" width={1100} height={700}>
+            <div style={{ width: 1100, height: 700, background: LIGHT.bgBase, overflowY: 'auto' }}>
+              <AdminPanel t={L}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard id="toasts-dark" label="Toast Notifications — Dark" width={720} height={280}>
+            <ToastRow t={D}/>
+          </DCArtboard>
+          <DCArtboard id="toasts-light" label="Toast Notifications — Light" width={720} height={280}>
+            <ToastRow t={L}/>
+          </DCArtboard>
+          <DCArtboard id="empty-dark" label="Empty States — Dark" width={900} height={280}>
+            <EmptyStates t={D}/>
+          </DCArtboard>
+          <DCArtboard id="empty-light" label="Empty States — Light" width={900} height={280}>
+            <EmptyStates t={L}/>
+          </DCArtboard>
+        </DCSection>
+
+      </DesignCanvas>
+
+      {/* ── Tweaks Panel ─────────────────────────────────────────────────── */}
+      {tweaksOpen && (
+        <div style={{
+          position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+          width: 260, background: DARK.bgSurface,
+          borderRadius: 14, border: `1px solid ${DARK.border}`,
+          boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          fontFamily: 'Inter, system-ui, sans-serif', overflow: 'hidden',
+        }}>
+          <div style={{
+            padding: '14px 16px', borderBottom: `1px solid ${DARK.border}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: DARK.textPrimary }}>Tweaks</span>
+            <button onClick={() => {
+              setTweaksOpen(false);
+              window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+            }} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <Icon name="x" size={14} color={DARK.textMuted}/>
+            </button>
+          </div>
+          <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {/* Info */}
+            <div style={{ fontSize: 11, color: DARK.textMuted, lineHeight: 1.5, padding: '8px 10px', background: DARK.bgElevated, borderRadius: 8 }}>
+              Use the canvas controls (top-left) to pan, zoom, and navigate sections. Click any artboard to focus it fullscreen.
+            </div>
+            {/* Theme note */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: DARK.textMuted, letterSpacing: '0.5px', textTransform: 'uppercase' }}>About this canvas</span>
+              <div style={{ fontSize: 12, color: DARK.textSecondary, lineHeight: 1.6 }}>
+                All screens are shown in both <strong style={{ color: DARK.textPrimary }}>dark</strong> and <strong style={{ color: DARK.textPrimary }}>light</strong> variants side-by-side. Each artboard is individually focusable for review.
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: DARK.textMuted, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Sections</span>
+              {[
+                'Authentication (Login, Sign Up, Forgot)',
+                'Onboarding (3 steps)',
+                'Web Dashboard (1440px)',
+                'Task Creation & Detail',
+                'Notes Grid & Editor',
+                'Mobile (5 screens × 2 modes)',
+                'Paywall & Settings',
+                'Admin, Toasts, Empty States',
+              ].map((s, i) => (
+                <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: DARK.accentFlat, minWidth: 16 }}>{i + 1}.</span>
+                  <span style={{ fontSize: 11, color: DARK.textSecondary, lineHeight: 1.5 }}>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+    <rect width="120" height="80" fill="#0C0C11"/>
+    <rect x="15" y="18" width="40" height="44" rx="6" fill="#141419" stroke="#2E2E4A" stroke-width="1"/>
+    <rect x="63" y="18" width="40" height="44" rx="6" fill="#141419" stroke="#2E2E4A" stroke-width="1"/>
+    <rect x="18" y="24" width="24" height="3" rx="1.5" fill="url(#g)"/>
+    <rect x="18" y="31" width="16" height="2" rx="1" fill="#2E2E4A"/>
+    <rect x="18" y="36" width="20" height="2" rx="1" fill="#2E2E4A"/>
+    <rect x="18" y="41" width="14" height="2" rx="1" fill="#2E2E4A"/>
+    <rect x="66" y="24" width="24" height="3" rx="1.5" fill="url(#g)"/>
+    <rect x="66" y="31" width="16" height="2" rx="1" fill="#2E2E4A"/>
+    <rect x="66" y="36" width="20" height="2" rx="1" fill="#2E2E4A"/>
+    <rect x="66" y="41" width="14" height="2" rx="1" fill="#2E2E4A"/>
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#7C3AED"/>
+        <stop offset="100%" stop-color="#4F46E5"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</template>
+</body>
+</html>

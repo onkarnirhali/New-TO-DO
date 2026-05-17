@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planote — Direction 1: Clean Minimal</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Inter', sans-serif; background: #f1f5f9; display: flex; flex-direction: column; align-items: center; padding: 32px 16px; min-height: 100vh; }
+  .label { font-size: 12px; font-weight: 600; color: #64748b; text-align: center; margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .badge { display: inline-block; background: #0f172a; color: white; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 4px; margin-bottom: 24px; }
+  .desc { max-width: 540px; text-align: center; font-size: 13px; color: #64748b; margin-bottom: 40px; line-height: 1.6; }
+  .screens { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1200px; }
+
+  /* ── LIGHT SHELL ── */
+  .shell { width: 540px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+  .shell-label { font-size: 11px; font-weight: 600; color: #94a3b8; text-align: center; margin-bottom: 8px; }
+
+  /* LIGHT */
+  .light { background: #ffffff; }
+  .light .topnav { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #e2e8f0; }
+  .light .logo { font-size: 14px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
+  .light .toggle { display: flex; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; }
+  .light .toggle-btn { padding: 5px 14px; font-size: 12px; font-weight: 500; color: #64748b; cursor: pointer; border: none; background: transparent; }
+  .light .toggle-btn.active { background: #0f172a; color: white; }
+  .light .avatar { width: 28px; height: 28px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #64748b; }
+  .light .body { display: flex; height: 460px; }
+  .light .sidebar { width: 180px; border-right: 1px solid #e2e8f0; padding: 16px; flex-shrink: 0; }
+  .light .sidebar-title { font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+  .light .sidebar-item { padding: 6px 10px; border-radius: 5px; font-size: 12px; font-weight: 500; color: #475569; cursor: pointer; margin-bottom: 2px; }
+  .light .sidebar-item.active { background: #f1f5f9; color: #0f172a; font-weight: 600; }
+  .light .sidebar-item:hover { background: #f8fafc; }
+  .light .main { flex: 1; padding: 20px; overflow: hidden; }
+  .light .board-title { font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.3px; }
+  .light .board-sub { font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+  .light .columns { display: flex; gap: 12px; height: 360px; }
+  .light .col { flex: 1; }
+  .light .col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .light .col-title { font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.8px; }
+  .light .col-count { font-size: 11px; color: #cbd5e1; font-weight: 500; }
+  .light .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); cursor: pointer; transition: box-shadow 0.15s; }
+  .light .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .light .card.active { border-left: 2px solid #0f172a; }
+  .light .card-title { font-size: 12px; font-weight: 600; color: #0f172a; margin-bottom: 5px; }
+  .light .card-meta { display: flex; align-items: center; gap: 8px; }
+  .light .card-date { font-size: 11px; color: #94a3b8; }
+  .light .card-tag { font-size: 10px; background: #f1f5f9; color: #64748b; padding: 1px 6px; border-radius: 3px; font-weight: 500; }
+  .light .card.done { opacity: 0.5; }
+  .light .card.done .card-title { text-decoration: line-through; color: #94a3b8; }
+  .light .add-btn { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 6px 0; }
+  .light .add-btn:hover { color: #94a3b8; }
+
+  /* DARK */
+  .dark { background: #0f172a; }
+  .dark .topnav { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #1e293b; }
+  .dark .logo { font-size: 14px; font-weight: 700; color: #f8fafc; letter-spacing: -0.5px; }
+  .dark .toggle { display: flex; border: 1px solid #1e293b; border-radius: 6px; overflow: hidden; }
+  .dark .toggle-btn { padding: 5px 14px; font-size: 12px; font-weight: 500; color: #475569; cursor: pointer; border: none; background: transparent; }
+  .dark .toggle-btn.active { background: #f8fafc; color: #0f172a; }
+  .dark .avatar { width: 28px; height: 28px; border-radius: 50%; background: #1e293b; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #475569; }
+  .dark .body { display: flex; height: 460px; }
+  .dark .sidebar { width: 180px; border-right: 1px solid #1e293b; padding: 16px; flex-shrink: 0; }
+  .dark .sidebar-title { font-size: 10px; font-weight: 600; color: #334155; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+  .dark .sidebar-item { padding: 6px 10px; border-radius: 5px; font-size: 12px; font-weight: 500; color: #475569; cursor: pointer; margin-bottom: 2px; }
+  .dark .sidebar-item.active { background: #1e293b; color: #f8fafc; font-weight: 600; }
+  .dark .main { flex: 1; padding: 20px; overflow: hidden; }
+  .dark .board-title { font-size: 16px; font-weight: 700; color: #f8fafc; margin-bottom: 4px; letter-spacing: -0.3px; }
+  .dark .board-sub { font-size: 12px; color: #334155; margin-bottom: 20px; }
+  .dark .columns { display: flex; gap: 12px; height: 360px; }
+  .dark .col { flex: 1; }
+  .dark .col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .dark .col-title { font-size: 11px; font-weight: 600; color: #334155; text-transform: uppercase; letter-spacing: 0.8px; }
+  .dark .col-count { font-size: 11px; color: #1e293b; font-weight: 500; }
+  .dark .card { background: #1e293b; border: 1px solid #293548; border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer; }
+  .dark .card.active { border-left: 2px solid #f8fafc; }
+  .dark .card-title { font-size: 12px; font-weight: 600; color: #e2e8f0; margin-bottom: 5px; }
+  .dark .card-meta { display: flex; align-items: center; gap: 8px; }
+  .dark .card-date { font-size: 11px; color: #334155; }
+  .dark .card-tag { font-size: 10px; background: #0f172a; color: #475569; padding: 1px 6px; border-radius: 3px; font-weight: 500; }
+  .dark .card.done { opacity: 0.4; }
+  .dark .card.done .card-title { text-decoration: line-through; color: #334155; }
+  .dark .add-btn { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #1e293b; cursor: pointer; padding: 6px 0; }
+
+  .attr-table { margin-top: 40px; width: 100%; max-width: 540px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .attr-table table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .attr-table th { background: #f8fafc; padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid #e2e8f0; }
+  .attr-table td { padding: 10px 16px; color: #374151; border-bottom: 1px solid #f1f5f9; }
+  .attr-table tr:last-child td { border-bottom: none; }
+  .attr-table td:first-child { font-weight: 600; color: #0f172a; width: 40%; }
+</style>
+</head>
+<body>
+
+<div class="label">Planote Design Direction 1 of 3</div>
+<div class="badge">Clean Minimal</div>
+<p class="desc">Inspired by Linear, Craft, Cron. Monochrome palette, surgical whitespace, no decorative color. The UI disappears — only your work remains. Strong appeal for developers and power users.</p>
+
+<div class="screens">
+
+  <!-- LIGHT -->
+  <div>
+    <div class="shell-label">☀️ Light Mode</div>
+    <div class="shell light">
+      <div class="topnav">
+        <div class="logo">Planote</div>
+        <div class="toggle">
+          <div class="toggle-btn active">Dashboard</div>
+          <div class="toggle-btn">Notes</div>
+        </div>
+        <div class="avatar">ON</div>
+      </div>
+      <div class="body">
+        <div class="sidebar">
+          <div class="sidebar-title">Dashboards</div>
+          <div class="sidebar-item active">Work Projects</div>
+          <div class="sidebar-item">Personal</div>
+          <div class="sidebar-item">Side Project</div>
+          <div class="sidebar-item">Learning</div>
+          <br>
+          <div class="sidebar-title">Quick</div>
+          <div class="sidebar-item">All Tasks</div>
+          <div class="sidebar-item">Due Today</div>
+        </div>
+        <div class="main">
+          <div class="board-title">Work Projects</div>
+          <div class="board-sub">4 tasks · 1 in progress</div>
+          <div class="columns">
+            <div class="col">
+              <div class="col-header">
+                <span class="col-title">To Do</span>
+                <span class="col-count">2</span>
+              </div>
+              <div class="card">
+                <div class="card-title">Design system tokens</div>
+                <div class="card-meta">
+                  <span class="card-date">Dec 20</span>
+                  <span class="card-tag">Design</span>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title">API documentation</div>
+                <div class="card-meta">
+                  <span class="card-date">Dec 22</span>
+                  <span class="card-tag">Backend</span>
+                </div>
+              </div>
+              <div class="add-btn">+ Add task</div>
+            </div>
+            <div class="col">
+              <div class="col-header">
+                <span class="col-title">In Progress</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="card active">
+                <div class="card-title">Auth flow setup</div>
+                <div class="card-meta">
+                  <span class="card-date">Dec 18</span>
+                  <span class="card-tag">Backend</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="col-header">
+                <span class="col-title">Done</span>
+                <span class="col-count">2</span>
+              </div>
+              <div class="card done">
+                <div class="card-title">Project setup</div>
+                <div class="card-meta"><span class="card-date">Dec 10</span></div>
+              </div>
+              <div class="card done">
+                <div class="card-title">Repo structure</div>
+                <div class="card-meta"><span class="card-date">Dec 11</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DARK -->
+  <div>
+    <div class="shell-label">🌙 Dark Mode</div>
+    <div class="shell dark">
+      <div class="topnav">
+        <div class="logo">Planote</div>
+        <div class="toggle">
+          <div class="toggle-btn active">Dashboard</div>
+          <div class="toggle-btn">Notes</div>
+        </div>
+        <div class="avatar">ON</div>
+      </div>
+      <div class="body">
+        <div class="sidebar">
+          <div class="sidebar-title">Dashboards</div>
+          <div class="sidebar-item active">Work Projects</div>
+          <div class="sidebar-item">Personal</div>
+          <div class="sidebar-item">Side Project</div>
+          <div class="sidebar-item">Learning</div>
+          <br>
+          <div class="sidebar-title">Quick</div>
+          <div class="sidebar-item">All Tasks</div>
+          <div class="sidebar-item">Due Today</div>
+        </div>
+        <div class="main">
+          <div class="board-title">Work Projects</div>
+          <div class="board-sub">4 tasks · 1 in progress</div>
+          <div class="columns">
+            <div class="col">
+              <div class="col-header">
+                <span class="col-title">To Do</span>
+                <span class="col-count">2</span>
+              </div>
+              <div class="card">
+                <div class="card-title">Design system tokens</div>
+                <div class="card-meta">
+                  <span class="card-date">Dec 20</span>
+                  <span class="card-tag">Design</span>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title">API documentation</div>
+                <div class="card-meta">
+                  <span class="card-date">Dec 22</span>
+                  <span class="card-tag">Backend</span>
+                </div>
+              </div>
+              <div class="add-btn">+ Add task</div>
+            </div>
+            <div class="col">
+              <div class="col-header">
+                <span class="col-title">In Progress</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="card active">
+                <div class="card-title">Auth flow setup</div>
+                <div class="card-meta">
+                  <span class="card-date">Dec 18</span>
+                  <span class="card-tag">Backend</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="col-header">
+                <span class="col-title">Done</span>
+                <span class="col-count">2</span>
+              </div>
+              <div class="card done">
+                <div class="card-title">Project setup</div>
+                <div class="card-meta"><span class="card-date">Dec 10</span></div>
+              </div>
+              <div class="card done">
+                <div class="card-title">Repo structure</div>
+                <div class="card-meta"><span class="card-date">Dec 11</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="attr-table">
+  <table>
+    <tr><th>Attribute</th><th>Value</th></tr>
+    <tr><td>Accent color</td><td>None — pure monochrome (#0F172A / #F8FAFC)</td></tr>
+    <tr><td>Card style</td><td>Flat, 1px border, minimal shadow</td></tr>
+    <tr><td>Corner radius</td><td>Small — 4–6px</td></tr>
+    <tr><td>Typography</td><td>Geometric sans — Inter or Geist</td></tr>
+    <tr><td>Density</td><td>Compact — more content visible at once</td></tr>
+    <tr><td>Feel</td><td>Precise, professional, focused</td></tr>
+    <tr><td>Best for</td><td>Power users, developers, consultants</td></tr>
+    <tr><td>Risk</td><td>May feel cold or sterile for students and casual users</td></tr>
+    <tr><td>Apps like this</td><td>Linear, Craft, Cron, Things (pro mode)</td></tr>
+  </table>
+</div>
+
+</body>
+</html>
