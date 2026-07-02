@@ -102,7 +102,7 @@ until docker compose exec -T postgres pg_isready -U planote -d planote &> /dev/n
   fi
   sleep 1
 done
-success "Postgres ready on :5432"
+success "Postgres ready on :15432"
 
 log "Waiting for Redis to be healthy..."
 ATTEMPTS=0

@@ -1,0 +1,262 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Planote — Prisma Schema
+//
+// This file is the single source of truth for the database structure.
+// Every table, column, relationship, and index is declared here.
+//
+// After changing this file:
+//   1. Run: pnpm --filter @planote/api prisma migrate dev --name <description>
+//   2. Commit the generated migration file alongside this schema change.
+//
+// Naming conventions:
+//   - Models use PascalCase (User, DashboardColumn)
+//   - Fields use camelCase (createdAt, clerkId)
+//   - DB table/column names use snake_case via @@map / @map
+//   - IDs use cuid() — collision-resistant, URL-safe, no sequential leakage
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Enums ─────────────────────────────────────────────────────────────────────
+
+enum Tier {
+  FREE
+  PAID
+}
+
+enum Theme {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum TaskStatus {
+  ACTIVE
+  DONE
+}
+
+enum ReminderType {
+  TIME
+  LOCATION
+}
+
+// ── User ──────────────────────────────────────────────────────────────────────
+
+model User {
+  id                  String    @id @default(cuid())
+
+  /// Clerk's user ID — used to look up users from auth tokens.
+  /// Unique because one Clerk account = one Planote account.
+  clerkId             String    @unique @map("clerk_id")
+
+  email               String    @unique
+  name                String
+  avatarUrl           String?   @map("avatar_url")
+  tier                Tier      @default(FREE)
+  isAdmin             Boolean   @default(false) @map("is_admin")
+  isActive            Boolean   @default(true)  @map("is_active")
+  themePreference     Theme     @default(SYSTEM) @map("theme_preference")
+  onboardingCompleted Boolean   @default(false)  @map("onboarding_completed")
+  lastLoginAt         DateTime? @map("last_login_at")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt      @map("updated_at")
+
+  // Relations
+  dashboards  Dashboard[]
+  tasks       Task[]
+  notes       Note[]
+
+  @@map("users")
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+
+model Dashboard {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  title       String
+  description String?
+
+  /// Position controls the order in the left nav. Lower = higher up.
+  /// Gaps are fine (e.g. 0, 10, 20) — makes reordering cheaper since
+  /// you don't have to renumber everything.
+  position    Int       @default(0)
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt      @map("updated_at")
+
+  // Relations
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  columns   DashboardColumn[]
+  taskLinks TaskDashboard[]
+
+  @@index([userId])
+  @@map("dashboards")
+}
+
+// ── DashboardColumn ───────────────────────────────────────────────────────────
+
+model DashboardColumn {
+  id          String    @id @default(cuid())
+  dashboardId String    @map("dashboard_id")
+  title       String
+
+  /// Optional hex colour for the column header accent (e.g. "#7C3AED").
+  color       String?
+
+  /// Position within the board. Lower = further left.
+  position    Int
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt      @map("updated_at")
+
+  // Relations
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+  tasks       Task[]
+
+  @@index([dashboardId])
+  @@map("dashboard_columns")
+}
+
+// ── Task ──────────────────────────────────────────────────────────────────────
+
+model Task {
+  id          String     @id @default(cuid())
+  userId      String     @map("user_id")
+
+  /// The column this task currently lives in (its primary placement).
+  columnId    String     @map("column_id")
+
+  title       String
+  description String?
+  status      TaskStatus @default(ACTIVE)
+  dueDate     DateTime?  @map("due_date")
+
+  /// Position within the column for ordering. Uses gap-based positioning
+  /// (same as dashboard.position) to make drag-and-drop cheaper.
+  position    Int        @default(0)
+
+  linkedNoteId String?   @map("linked_note_id")
+
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt      @map("updated_at")
+
+  // Relations
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  column      DashboardColumn @relation(fields: [columnId], references: [id], onDelete: Restrict)
+  linkedNote  Note?           @relation(fields: [linkedNoteId], references: [id], onDelete: SetNull)
+  reminder    Reminder?
+  dashboards  TaskDashboard[]
+
+  @@index([userId])
+  @@index([columnId])
+  @@index([dueDate])  // Needed for reminder background jobs: "find all tasks due soon"
+  @@map("tasks")
+}
+
+// ── TaskDashboard — Junction Table ────────────────────────────────────────────
+//
+// A task can appear in multiple dashboards simultaneously.
+// This is the "shared across dashboards" feature.
+// Example: a task "Review PR" might appear on both "Work" and "Sprint" boards.
+
+model TaskDashboard {
+  taskId      String @map("task_id")
+  dashboardId String @map("dashboard_id")
+
+  task        Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+
+  @@id([taskId, dashboardId])
+  @@map("task_dashboards")
+}
+
+// ── Note ──────────────────────────────────────────────────────────────────────
+
+model Note {
+  id                    String   @id @default(cuid())
+  userId                String   @map("user_id")
+  title                 String
+
+  /// TipTap stores its rich-text document as a JSON object.
+  /// We store it as Json type — Postgres uses JSONB under the hood,
+  /// which is indexed and efficient.
+  content               Json?
+
+  /// Plain text extracted from content — used for the 4×4 grid card
+  /// preview without having to parse the JSON on every list fetch.
+  contentPreview        String?  @map("content_preview")
+
+  isPasswordProtected   Boolean  @default(false) @map("is_password_protected")
+
+  /// bcrypt hash of the note password. Never store plain text.
+  /// Null when the note is not protected.
+  passwordHash          String?  @map("password_hash")
+
+  /// Set to true if any paid features have ever been applied to this note
+  /// (text wrap, image resize, AI rephrase). Survives downgrades — we use
+  /// this to know which notes to handle carefully on tier change.
+  containsPremiumContent Boolean @default(false) @map("contains_premium_content")
+
+  /// Display order in the 4×4 grid. Gap-based, same as dashboard.position.
+  position              Int      @default(0)
+
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt      @map("updated_at")
+
+  // Relations
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  linkedTasks Task[]
+
+  @@index([userId])
+  @@map("notes")
+}
+
+// ── Reminder ──────────────────────────────────────────────────────────────────
+//
+// Stored separately from Task so:
+// 1. Tasks without reminders have no wasted nullable columns
+// 2. Background jobs can query reminders independently
+// 3. We can easily extend reminder types later (recurring, etc.)
+
+model Reminder {
+  id     String       @id @default(cuid())
+  taskId String       @unique @map("task_id")
+  type   ReminderType
+
+  // ── Time-based fields ─────────────────────────────────────────────
+  /// When to fire the reminder. Null for LOCATION type.
+  remindAt DateTime? @map("remind_at")
+
+  /// Tracks whether the push notification has been sent.
+  sent     Boolean   @default(false)
+
+  // ── Location-based fields ─────────────────────────────────────────
+  /// GPS coordinates. Null for TIME type.
+  lat          Float?
+  lng          Float?
+  radiusMetres Int?   @map("radius_metres")
+
+  /// Human-readable label (e.g. "Lilavati Hospital") for display.
+  label        String?
+
+  /// Paused when user downgrades from paid tier.
+  /// We never delete location reminders on downgrade — we pause them
+  /// and resume when the user re-upgrades.
+  paused       Boolean @default(false)
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt      @map("updated_at")
+
+  // Relations
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@index([remindAt, sent])  // Background job: "find unsent TIME reminders due now"
+  @@map("reminders")
+}

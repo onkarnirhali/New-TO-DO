@@ -1,38 +1,20 @@
 import { NestFactory } from "@nestjs/core";
-import { ValidationPipe } from "@nestjs/common";
+import { ValidationPipe, Logger } from "@nestjs/common";
 import { AppModule } from "./app.module.js";
+import { AppConfigService } from "./config/config.service.js";
 
-/**
- * Bootstrap — the entry point for the NestJS application.
- *
- * This function:
- * 1. Creates the NestJS application
- * 2. Configures global middleware (validation, CORS)
- * 3. Starts listening on the configured port
- *
- * It runs once when the server starts.
- */
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const logger = new Logger("Bootstrap");
+  // rawBody: true makes req.rawBody available — required for svix webhook
+  // signature verification. The HMAC is computed over the exact bytes Clerk
+  // sent; once the body is parsed to JSON and re-serialised, the signature
+  // no longer matches.
+  const app = await NestFactory.create(AppModule, { rawBody: true });
 
-  /**
-   * Global Validation Pipe
-   *
-   * This automatically validates every incoming request body
-   * against the DTO (Data Transfer Object) class decorators.
-   *
-   * `whitelist: true` — strips any properties not declared in the DTO.
-   *   Why: Prevents "mass assignment" attacks where a user sends
-   *   extra fields like `{ isAdmin: true }` hoping the server
-   *   saves them without checking.
-   *
-   * `forbidNonWhitelisted: true` — throws an error if unknown
-   *   properties are sent, instead of silently stripping them.
-   *   This makes the API contract explicit and strict.
-   *
-   * `transform: true` — automatically converts string params
-   *   to their declared types (e.g., "123" → 123 for a number field).
-   */
+  // Retrieve the typed config service — if any required env vars are
+  // missing, this is where the app crashes with a clear error message.
+  const config = app.get(AppConfigService);
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -41,25 +23,16 @@ async function bootstrap(): Promise<void> {
     })
   );
 
-  /**
-   * CORS Configuration
-   *
-   * Cross-Origin Resource Sharing — browsers block requests from
-   * one origin (app.onkarn.info) to another (api.onkarn.info)
-   * by default. We explicitly allow our frontend origins here.
-   *
-   * In production, this will be tightened to our exact domain.
-   */
   app.enableCors({
-    origin: process.env["ALLOWED_ORIGINS"]?.split(",") ?? ["http://localhost:3000"],
+    origin: config.allowedOrigins,
     credentials: true,
   });
 
-  const port = process.env["PORT"] ?? 4000;
-  await app.listen(port);
+  await app.listen(config.port);
 
-  console.log(`\n🚀 Planote API running on http://localhost:${port}`);
-  console.log(`   Health check: http://localhost:${port}/health\n`);
+  logger.log(`🚀 Planote API running on http://localhost:${config.port}`);
+  logger.log(`   Health: http://localhost:${config.port}/health`);
+  logger.log(`   Environment: ${config.isProduction ? "production" : "development"}`);
 }
 
 void bootstrap();

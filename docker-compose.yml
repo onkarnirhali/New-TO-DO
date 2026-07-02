@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: planote_dev
       POSTGRES_DB: planote
     ports:
-      - "5432:5432"
+      - "15432:5432"
     volumes:
       # Persist data across container restarts
       - postgres_data:/var/lib/postgresql/data

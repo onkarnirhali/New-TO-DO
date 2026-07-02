@@ -184,6 +184,8 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 ## Known Issues / Blockers
 
+- **Local PostgreSQL port conflict:** This machine has two local PostgreSQL instances on ports 5432 and 5433. Planote's Docker Postgres is mapped to **port 15432** to avoid collision. `DATABASE_URL` must use `localhost:15432`.
+
 - Visual companion server is localhost-only — must be restarted each session. Run:
   ```bash
   bash "C:/Users/onkar/.claude/skills/brainstorming/scripts/start-server.sh" --project-dir "c:/Data/Projects/New Todo"
@@ -195,6 +197,30 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 ## Session Log
 
 > Newest entries first.
+
+### [2026-05-18] Agent: Codex | Model: gpt-5
+**Did:** Explained what DTOs mean in the NestJS dashboards API and how the current dashboard/column DTO classes validate request bodies.
+**Changed:** CONVERSATION_MEMORY.md
+**Next:** Milestone 5 remains Tasks API.
+**Notes:** No product or architecture decisions changed.
+
+### [2026-05-17] Agent: Claude | Model: claude-sonnet-4-6
+**Did:** Completed Milestone 4 — Dashboards API. Full CRUD for dashboards and their columns. Gap-based positioning (0/10/20/…) for both. `PATCH /dashboards/reorder` and `PATCH /:id/columns/reorder` for drag-and-drop. Column deletion blocked with 422 when tasks exist (foreign key Restrict). Added `UsersService.requireByClerkId()` for clean clerkId→userId resolution across all service methods. Live-tested: dashboard routes return 401 without token; health returns 200 (public).
+**Changed:** Added `apps/api/src/dashboards/` (dashboards.service.ts, dashboards.controller.ts, dashboards.module.ts, 5 DTOs), updated users.service.ts (+requireByClerkId), app.module.ts (+DashboardsModule).
+**Next:** Milestone 5 — Tasks API (CRUD + move between columns + reminder create/update/delete).
+**Notes:** Route order in NestJS controller matters — `"reorder"` literal route declared before `":id"` param route to avoid capture.
+
+### [2026-05-17] Agent: Claude | Model: claude-sonnet-4-6
+**Did:** Completed Milestone 3 — Clerk Authentication. Built NestJS auth layer using `@clerk/backend` standalone `verifyToken` (no `@clerk/nestjs` package exists). Global `ClerkAuthGuard` via `APP_GUARD`, `@Public()` decorator for health + webhook routes, `@CurrentUser()` param decorator, `UsersService` for DB sync, `WebhookController` at `POST /webhooks/clerk` with svix signature verification. Enabled `rawBody: true` in NestFactory for svix HMAC. Verified: health endpoint returns 200 without token, server starts cleanly with both modules registered.
+**Changed:** Added `apps/api/src/auth/` (clerk.service.ts, auth.module.ts, guards/clerk-auth.guard.ts, decorators/public.decorator.ts, decorators/current-user.decorator.ts), `apps/api/src/users/` (users.service.ts, users.module.ts, webhook.controller.ts), updated app.module.ts, main.ts (rawBody), health.controller.ts (@Public).
+**Next:** Milestone 4 — Dashboards API (CRUD endpoints for dashboards and columns using the new auth guard).
+**Notes:** No `@clerk/nestjs` package exists — use `@clerk/backend`'s standalone `verifyToken(token, { secretKey })`. Webhook secret (`CLERK_WEBHOOK_SECRET`) must be configured in `.env` before webhook works in production.
+
+### [2026-05-17] Agent: Claude | Model: claude-sonnet-4-6
+**Did:** Completed Milestone 2 — Backend Foundation + Database Schema. Fixed three Prisma 7 breaking changes: (1) `defineConfig` requires `datasource: { url }` not `datasourceUrl`; (2) `PrismaClient` constructor requires a Driver Adapter (`@prisma/adapter-pg`) — no longer accepts plain connection strings; (3) shared `nestjs.json` tsconfig had absolute `rootDir` that broke cross-package extension. Also diagnosed a local PostgreSQL installation conflict on port 5432/5433 — Docker Postgres remapped to port 15432. API starts cleanly, database connected, all 7 tables created.
+**Changed:** `apps/api/prisma.config.ts` (datasource.url fix + dotenv load), `apps/api/src/database/prisma.service.ts` (Driver Adapter pattern), `packages/config/typescript/nestjs.json` (remove rootDir), `apps/api/tsconfig.json` (add rootDir locally), `docker-compose.yml` (port 15432), `apps/api/.env` + `.env.example` (port 15432), `dev.sh` (port log message), `apps/api/package.json` (added @prisma/adapter-pg, pg, @types/pg).
+**Next:** Milestone 3 — Clerk authentication: install @clerk/nestjs, add ClerkModule to AppModule, implement auth guard, protect routes, add webhook handler for user sync.
+**Notes:** Local machine has 2 PostgreSQL instances on ports 5432 and 5433. Always use port 15432 for Planote's Docker Postgres on this machine. Migration file at `apps/api/prisma/migrations/20260517191107_init_schema/`.
 
 ### [2026-05-17] Agent: Codex | Model: gpt-5
 **Did:** Expanded the implementation-tutor prompt into a more comprehensive master prompt covering teaching style, architecture, coding standards, verification, production readiness, and memory updates.
