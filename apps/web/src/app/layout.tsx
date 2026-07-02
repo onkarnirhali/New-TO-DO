@@ -20,7 +20,9 @@ export const metadata: Metadata = {
  * - Defines the HTML shell (lang, body)
  * - Sets metadata (tab title, description)
  * - Will wrap the app in ClerkProvider (auth) in Milestone 2
- * - Will apply the saved theme (light/dark) in Milestone 2
+ * - Defaults to dark mode — per 05-ui-ux-design.md, dark is the
+ *   primary/hero experience. A user-toggleable theme preference
+ *   (persisted, e.g. via next-themes) is a separate future piece.
  */
 export default function RootLayout({
   children,
@@ -28,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );

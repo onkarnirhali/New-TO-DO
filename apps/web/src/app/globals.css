@@ -32,7 +32,10 @@
 
   /* ── Base resets ─────────────────────────────────────────────────── */
   * {
-    @apply border-dark-border;
+    /* Uses the CSS var (mode-aware) rather than a hardcoded Tailwind
+       color — the previous `border-dark-border` locked every element's
+       border to the dark-mode color even in light mode. */
+    border-color: var(--border);
     box-sizing: border-box;
   }
 
