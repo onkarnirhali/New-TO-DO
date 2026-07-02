@@ -5,6 +5,7 @@ import { AuthModule } from "./auth/auth.module.js";
 import { UsersModule } from "./users/users.module.js";
 import { DashboardsModule } from "./dashboards/dashboards.module.js";
 import { TasksModule } from "./tasks/tasks.module.js";
+import { NotesModule } from "./notes/notes.module.js";
 import { HealthController } from "./health/health.controller.js";
 
 /**
@@ -21,6 +22,7 @@ import { HealthController } from "./health/health.controller.js";
     UsersModule,
     DashboardsModule,
     TasksModule,
+    NotesModule,
   ],
   controllers: [HealthController],
 })

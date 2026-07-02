@@ -166,12 +166,15 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 | Task | Owner | Status |
 |------|-------|--------|
-| Implementation of Planote Design.html | Claude + User | Ready to start — all decisions locked |
+| Web frontend (Next.js) wired to real backend | Claude (autonomous loop) | Not started — `apps/web` is still the default scaffold. Build against `new-todo/project/Planote Design.html` + `planote-*.jsx` |
+| Mobile app (Expo/React Native) | — | Not started — deferred until backend + web are solid |
 
 ---
 
 ## Completed Milestones
 
+- [2026-05-19] Milestone 6 — Notes API: CRUD, password protection (bcrypt hash, set/remove/unlock endpoints that scrub content for locked notes until unlocked), task linking (`POST`/`DELETE /notes/:id/tasks/:taskId`, FK lives on Task). Verified via lint + type-check + `nest build` + a live boot smoke test (routes registered, 401 without token, DB connects).
+- [2026-05-19] Milestone 5 — Tasks API confirmed complete (full CRUD, move, cross-dashboard sharing, reminders was already implemented in code; this session just caught the memory log up to reality and verified it builds).
 - [2026-05-15] Full design prototype built by Claude Design (8 sections, 40+ artboards)
 - [2026-05-15] Tech stack fully decided (NestJS + Neon + Clerk + Razorpay + RevenueCat)
 - [2026-05-15] Freemium model finalised (Option C)
@@ -192,11 +195,23 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
   ```
   Then read URL from newest `.superpowers/brainstorm/<session>/state/server-info`
 
+- **`apps/web` does not build:** `next config error: Configuring Next.js via 'next.config.ts' is not supported` with the installed Next.js version. Needs `next.config.ts` converted to `.js`/`.mjs` before any Web milestone work starts. Not fixed yet — out of scope for the backend work done so far.
+
+- **No test framework configured for `apps/api`:** no Jest setup, no `.spec.ts` files, no `test` script in `apps/api/package.json` (root `pnpm test` will no-op or fail for this package). Verification so far has relied on lint + type-check + `nest build` + manual boot/curl smoke tests. Worth setting up Jest + a Prisma test-db strategy before backend logic gets much more complex.
+
+- **No real third-party credentials configured:** `apps/api/.env` only has placeholder values (`CLERK_SECRET_KEY=sk_test_...`, empty R2/AI keys). The app boots and route guards work (verified: protected routes correctly 401 without a token), but no real end-to-end request against Clerk, Neon, Razorpay, RevenueCat, Cloudflare R2, or the AI providers has been (or can be) tested locally.
+
 ---
 
 ## Session Log
 
 > Newest entries first.
+
+### [2026-05-19] Agent: Claude | Model: claude-sonnet-5
+**Did:** Ran on an autonomous `/loop` for the first time (feature/autonomous-build branch, backed up prior uncommitted work in a separate commit first). Built Milestone 6 — Notes API (`apps/api/src/notes/`: controller, service, DTOs, module) covering CRUD, gap-based grid positioning, password protection via bcrypt (set/remove/unlock, with content+contentPreview scrubbed on locked notes for both list and findOne until unlocked), and task linking/unlinking (FK lives on `Task.linkedNoteId`, so Notes-side linking just validates ownership on both sides and updates the task). Added `bcryptjs` + `@types/bcryptjs` deps. Along the way found and fixed two real pre-existing bugs blocking verification: (1) `apps/api` had no ESLint config file at all despite a shared config existing in `packages/config/eslint/nest.js` — added `apps/api/.eslintrc.cjs` (had to use `require.resolve(...)` in `extends` because ESLint 8's shareable-config name-mangling breaks on scoped-package subpaths like `@planote/config/eslint/nest`); fixing this surfaced 3 unrelated pre-existing lint errors (unused imports/type in `current-user.decorator.ts`, `tasks.service.ts`, and a redundant string-literal union in `webhook.controller.ts`) which I also fixed. (2) `nest build` was silently writing output to `packages/config/typescript/dist` instead of `apps/api/dist`, because `outDir: "./dist"` in the shared base tsconfig resolves relative to *that* config file, not the extending one — added an explicit `outDir` override in `apps/api/tsconfig.json`. Verified everything with `pnpm --filter @planote/api lint/type-check/build`, then booted the real compiled server against the Dockerized Postgres and curled it: `/health` → 200, `/notes` (and other protected routes) → 401 without a token, confirming the guard + DB wiring is real, not just type-checking clean.
+**Changed:** Added `apps/api/src/notes/**`, `apps/api/.eslintrc.cjs`. Modified `apps/api/package.json` (bcryptjs deps), `apps/api/tsconfig.json` (outDir fix), `apps/api/src/app.module.ts` (register NotesModule), `apps/api/src/auth/decorators/current-user.decorator.ts`, `apps/api/src/tasks/tasks.service.ts`, `apps/api/src/users/webhook.controller.ts` (pre-existing lint fixes), `pnpm-lock.yaml`.
+**Next:** Backend feature-scope gaps look closed for now (Auth, Dashboards, Tasks, Notes all implemented). Next up per the loop's priority order: wire `apps/web` to the real backend using the existing design assets — but `apps/web` currently fails to build at all (see Known Issues: `next.config.ts` not supported), so that's the very first thing to fix before any frontend feature work.
+**Notes:** Nothing hit that needed to stop for human input this iteration — no real credentials were needed for anything implemented. The Clerk-gated smoke test could only verify guard behavior (401), not actual authenticated CRUD, since only a placeholder `CLERK_SECRET_KEY` exists locally.
 
 ### [2026-05-18] Agent: Codex | Model: gpt-5
 **Did:** Explained what DTOs mean in the NestJS dashboards API and how the current dashboard/column DTO classes validate request bodies.

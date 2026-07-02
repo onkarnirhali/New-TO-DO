@@ -5,7 +5,7 @@ import {
   ConflictException,
 } from "@nestjs/common";
 import { PrismaService } from "../database/prisma.service.js";
-import { ReminderType, TaskStatus, type Task, type Reminder, type Prisma } from "@prisma/client";
+import { ReminderType, type Task, type Reminder, type Prisma } from "@prisma/client";
 import type { CreateTaskDto } from "./dto/create-task.dto.js";
 import type { UpdateTaskDto } from "./dto/update-task.dto.js";
 import type { MoveTaskDto } from "./dto/move-task.dto.js";

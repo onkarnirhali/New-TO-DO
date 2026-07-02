@@ -2,6 +2,7 @@
   "extends": "@planote/config/typescript/nestjs",
   "compilerOptions": {
     "rootDir": "./src",
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

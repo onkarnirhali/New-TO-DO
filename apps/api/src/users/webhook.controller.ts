@@ -32,7 +32,10 @@ interface ClerkUserPayload {
 }
 
 interface ClerkWebhookEvent {
-  type: "user.created" | "user.updated" | "user.deleted" | string;
+  // Clerk sends many more event types than we handle — keep this as a plain
+  // string (a narrower union here would be redundant since we still need
+  // the `default` case in the switch below for unhandled types).
+  type: string;
   data: ClerkUserPayload | { id: string };
 }
 
