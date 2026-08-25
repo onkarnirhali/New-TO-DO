@@ -11,7 +11,7 @@
 **Name:** Planote
 **Tagline concept:** Plan + Note — unified productivity
 **Goal:** Premium cross-platform To-Do + Note-taking app. Kanban task management unified with rich-text notes. Cloud-native, freemium, agentic AI.
-**Status:** Implementation in progress — Milestone 1 (Monorepo Foundation) underway.
+**Status:** Implementation in progress — monorepo and core backend APIs are implemented; the web frontend is still at the shell/auth-UI stage and is not wired end to end. The three-hour Master Delivery Agent Automation is active in dry-run mode until the governance bootstrap is complete.
 
 ---
 
@@ -210,6 +210,12 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 ## Session Log
 
 > Newest entries first.
+
+### [2026-08-25] Agent: Codex | Model: gpt-5.6-sol
+**Did:** Created the repository-owned Code Reviewer Agent prompt, review template, bootstrap index, and auditable task record in an isolated worktree.
+**Changed:** `.agent/README.md`, `.agent/prompts/code-reviewer-agent.md`, `.agent/templates/code-review.md`, `.agent/tasks/TASK-001-code-reviewer-agent.md`, `CONVERSATION_MEMORY.md`.
+**Next:** Independently review TASK-001, then update the active Master Automation to load this prompt for completed-task handoffs.
+**Notes:** The broader governance bootstrap remains incomplete; the Master Automation must stay in dry-run mode until its approved plan is implemented.
 
 ### [2026-05-19] Agent: Claude | Model: claude-sonnet-5
 **Did:** Third autonomous `/loop` iteration (run manually this time at the user's request instead of waiting for the scheduled wakeup — see Notes). Built the web app shell: `TopNav`, `Sidebar`, `AppShell` under `apps/web/src/components/layout/`, plus `Wordmark`/`Avatar`/`Tag`/`Button` primitives under `apps/web/src/components/ui/`, wired together at a new `/app` route with placeholder content (no live data — that's later). Converted the `new-todo/project/planote-*.jsx` inline-style prototype into real Tailwind components against the tokens already in `tailwind.config.ts` (didn't need to touch that file — it already matched `05-ui-ux-design.md` exactly). Added `lucide-react` since the prototype's `Icon name="..."` values are literally Lucide icon names. Found the app had no theme mechanism at all — nothing set `.dark` anywhere, so despite dark mode being fully styled it was silently rendering light by default, contradicting "dark is primary/hero" in the design doc. Fixed by defaulting `<html>` to `className="dark"` in the root layout; a real toggle/persistence is still future work (logged as a Known Issue). Also fixed a real pre-existing CSS bug noticed while in `globals.css`: the universal `* { border-color }` reset was hardcoded to the dark palette's border color regardless of mode, which would break every light-mode border on any element using the bare `border` utility — changed to `var(--border)`. Verified with lint + type-check + build (all clean, monorepo-wide), and — since this is UI work — actually looked at it: built, served on port 34567 (3001/3002/3004 were occupied by unrelated processes on this machine), and used the agent-browser skill to screenshot both `/` and `/app` in a real headless browser to confirm the dark theme, gradient wordmark, sidebar, and nav all render correctly, not just that the build passed.
