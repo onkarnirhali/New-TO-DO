@@ -13,5 +13,10 @@
   31 web launch blockers are unverified.
 - Safety: preserve 25 dirty primary-checkout paths. Product work uses isolated
   worktrees only after governance approval.
-- Blocker: independent Terra reviewer capacity was unavailable; no task may be
-  verified, committed, or pushed until it returns.
+- Governance reconciliation (2026-08-26): TASK-001 through TASK-010 and
+  AC-GOV-01 through AC-GOV-03 are reconciled from exact approved review
+  evidence; M0-GOVERNANCE is verified. TASK-011 remains pending independent
+  review and is neither verified, committed, nor pushed.
+- Next product task after the TASK-011 review gate: web test infrastructure.
+  M1 still has 31 web launch-blocker criteria unverified. The dirty primary
+  checkout remains preserved.

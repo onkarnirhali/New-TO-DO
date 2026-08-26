@@ -92,10 +92,12 @@ Add the owner-approved product-first planning controls to the repository-owned M
 ## Decisions and handoff
 
 - Product-first planning is an owner-approved governance requirement. The task acceptance link is narrowed to `AC-GOV-03`: it changes the Master Agent role contract and preserves the independent-review gate, rather than claiming completion of the wider controller-bootstrap criterion `AC-GOV-02`.
-- Final independent review approved the exact frozen scope. Re-run final gates after this documentation update, then commit and push only TASK-010 to `codex/governance-bootstrap`.
+- Final independent review approved the exact frozen scope; the approved change
+  has since been committed and pushed on the governed tracking branch.
 
 ## Git result
 
-- Commit: Pending.
-- Branch: codex/governance-bootstrap.
-- Push: Pending.
+- Commit: `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`.
+- Branch: `codex/governance-bootstrap` tracks
+  `origin/codex/governance-bootstrap` at that commit.
+- Push: confirmed on the tracked remote branch.

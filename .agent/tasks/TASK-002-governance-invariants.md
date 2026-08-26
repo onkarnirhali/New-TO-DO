@@ -1,6 +1,6 @@
 # TASK-002 — Add delivery governance invariants
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-01
 - Owner: Master Delivery Agent
 - Assigned agent: implementation-agent
@@ -80,14 +80,22 @@ policy files and a validator whose failure clearly identifies a missing policy.
 
 ## Review result
 
-Historical independent review found a P1 directory-path false positive in the
-validator. The targeted regression test and regular-file check were added.
-That re-review was recorded only in this task, without the now-required review
-artifact and model/effort provenance. Fresh Terra/high review is pending;
-commit/push permission is currently no.
+- Review report: `.agent/reviews/REVIEW-TASK-002-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-The next governance task adds the machine-readable acceptance registry and
-delivery ledger. Do not mark this task verified or commit it until independent
-review is approved.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. Historical Luna/medium provenance remains recorded
+above and is not retroactively normalized.
+
+## Git result
+
+- Task implementation commit: `e2cf113ac7e1507af32d680ff748095f69b352e6`.
+- Branch: the governed `codex/governance-bootstrap` tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e` tracks
+  `origin/codex/governance-bootstrap`; the task commit is reachable from it.
+- Push: confirmed by that tracked remote branch state.

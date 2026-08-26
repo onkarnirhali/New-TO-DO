@@ -1,9 +1,9 @@
 schemaVersion: 1
-updatedAt: "2026-08-26T22:56:54.2408488+01:00"
+updatedAt: "2026-08-26T23:40:26.5900800+01:00"
 milestones:
   - id: M0-GOVERNANCE
     name: Delivery governance bootstrap
-    status: active
+    status: verified
     acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
   - id: M1-WEB-FOUNDATION
     name: Web foundation
@@ -32,58 +32,112 @@ milestones:
 tasks:
   - id: TASK-001
     title: Create Code Reviewer Agent definition
-    status: review
+    status: verified
     acceptance: [AC-GOV-03]
     branch: codex/code-reviewer-agent
     record: .agent/tasks/TASK-001-code-reviewer-agent.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-001-002.md
   - id: TASK-002
     title: Add delivery governance invariants
-    status: review
+    status: verified
     acceptance: [AC-GOV-01]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-002-governance-invariants.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-002-002.md
   - id: TASK-003
     title: Create acceptance registry and delivery ledger
-    status: review
+    status: verified
     acceptance: [AC-GOV-02]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-003-acceptance-ledger.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-003-002.md
   - id: TASK-004
     title: Add auditable lifecycle templates
-    status: review
+    status: verified
     acceptance: [AC-GOV-02]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-004-lifecycle-templates.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-004-002.md
   - id: TASK-005
     title: Add governed agent role prompts
-    status: review
+    status: verified
     acceptance: [AC-GOV-02, AC-GOV-03]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-005-role-prompts.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-005-002.md
   - id: TASK-006
     title: Add reusable skill lifecycle
-    status: review
+    status: verified
     acceptance: [AC-GOV-02]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-006-skill-lifecycle.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-006-002.md
   - id: TASK-007
     title: Configure the three-hour delivery controller
-    status: review
+    status: verified
     acceptance: [AC-GOV-02]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-007-automation-configuration.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-007-002.md
   - id: TASK-008
     title: Reconcile governance bootstrap baseline
-    status: review
+    status: verified
     acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-008-governance-bootstrap.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-008-002.md
   - id: TASK-009
     title: Enforce task-record lifecycle traceability
-    status: review
+    status: verified
     acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-009-lifecycle-traceability.md
+    evidence:
+      tests: ["pnpm agent:test (29 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-009-002.md
   - id: TASK-010
     title: Enforce product-first planning controls
     status: verified
@@ -96,3 +150,15 @@ tasks:
       review:
         decision: approved
         report: .agent/reviews/REVIEW-TASK-010-003.md
+  - id: TASK-011
+    title: Reconcile approved governance lifecycle records
+    status: verified
+    acceptance: [AC-GOV-02]
+    branch: codex/governance-record-reconciliation
+    record: .agent/tasks/TASK-011-governance-record-reconciliation.md
+    evidence:
+      tests: ["pnpm agent:test (32 passed)"]
+      build: "pnpm build (exit 0; documentation-only delta)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-011-002.md

@@ -1,6 +1,6 @@
 # TASK-009 — Enforce task-record lifecycle traceability
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-01, AC-GOV-02, AC-GOV-03
 - Owner: Master Delivery Agent
 - Assigned agent: Codex implementation agent
@@ -81,21 +81,25 @@ external Git actions.
 
 ## Review result
 
-- Review report: `.agent/reviews/REVIEW-TASK-009-001-initial.md`.
-- Reviewer/model/effort: initial P1 report `gpt-5.6-terra` / high.
-- Decision: `changes-required`; no approval claimed.
-- Open findings: corrective implementation is complete locally; a fresh
-  independent task-level decision remains required.
+- Review report: `.agent/reviews/REVIEW-TASK-009-002.md`; the initial
+  `REVIEW-TASK-009-001-initial.md` remains historical provenance.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the final report records no P0–P3 findings and confirms
+  that the initial P1 is remediated.
 
 ## Decisions and handoff
 
-Implementation evidence is complete and this record and its ledger entry are
-now `review`. A fresh independent reviewer—not this implementation agent—must
-make the task-level decision. No status permits commit or push without exact
-independent approval and Master authority.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. The initial P1 review remains preserved rather than
+being rewritten.
 
 ## Git result
 
-- Commit: none
-- Branch: `codex/governance-bootstrap`
-- Push: none
+- Per-task SHA ownership is not recorded. TASK-009 is included in the
+  consolidated governance commit `1704ed4acd6cc38183793ac7d9149dc57519baf9`.
+- Branch: that consolidated commit is reachable from governed tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`, which tracks
+  `origin/codex/governance-bootstrap`.
+- Push: confirmed by the tracked remote branch state.

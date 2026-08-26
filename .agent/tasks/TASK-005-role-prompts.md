@@ -1,6 +1,6 @@
 # TASK-005 — Add governed agent role prompts
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-02, AC-GOV-03
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
@@ -74,14 +74,23 @@ model routing, evidence, and reviewer-handoff requirements.
 
 ## Review result
 
-Pending fresh independent `gpt-5.6-terra` / high review; existing frozen packet
-must be refreshed because the role contracts changed after Snapshot V2.
+- Review report: `.agent/reviews/REVIEW-TASK-005-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-Reviewer input must include frozen diff, task records, criteria, changed files,
-commands, repository memory, and both implementer and reviewer routing evidence.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. Historical implementation-route metadata remains
+unavailable as recorded above.
 
 ## Git result
 
-Pending exact approved review.
+- Per-task SHA ownership is not recorded. TASK-005 is included in the
+  consolidated governance commit `1704ed4acd6cc38183793ac7d9149dc57519baf9`.
+- Branch: that consolidated commit is reachable from governed tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`, which tracks
+  `origin/codex/governance-bootstrap`.
+- Push: confirmed by the tracked remote branch state.

@@ -1,6 +1,6 @@
 # TASK-008 — Reconcile governance bootstrap baseline
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-01, AC-GOV-02, AC-GOV-03
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
@@ -79,16 +79,23 @@ governance evidence, dry-run state, model policy, risks, and review handoff.
 
 ## Review result
 
-Blocked pending fresh independent `gpt-5.6-terra` high reviewer availability.
-The earlier three reviewer attempts were blocked by account quota; no reviewer
-decision, verification, commit, or push is recorded.
+- Review report: `.agent/reviews/REVIEW-TASK-008-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-Fresh independent review is mandatory. The V3 packet refresh is owner-authorized
-handoff preparation only, not a review. After exact approval, rerun gates,
-create a focused commit, and push only `codex/governance-bootstrap`.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. Earlier reviewer-capacity blockers remain historical
+context and do not override the recorded final decision.
 
 ## Git result
 
-Pending exact approved review.
+- Per-task SHA ownership is not recorded. TASK-008 is included in the
+  consolidated governance commit `1704ed4acd6cc38183793ac7d9149dc57519baf9`.
+- Branch: that consolidated commit is reachable from governed tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`, which tracks
+  `origin/codex/governance-bootstrap`.
+- Push: confirmed by the tracked remote branch state.

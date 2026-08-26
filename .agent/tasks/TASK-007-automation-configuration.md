@@ -1,6 +1,6 @@
 # TASK-007 — Configure the three-hour delivery controller
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-02
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
@@ -65,13 +65,23 @@ dry-run gate, report contract, and non-protected push boundary.
 
 ## Review result
 
-Pending fresh independent `gpt-5.6-terra` high review.
+- Review report: `.agent/reviews/REVIEW-TASK-007-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-The consolidated reviewer must confirm cadence, timezone, dry-run gating,
-documentation, authority, routing, and no merge/deploy permission.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. Historical implementation-route metadata remains
+unavailable as recorded above.
 
 ## Git result
 
-Pending exact approved review.
+- Per-task SHA ownership is not recorded. TASK-007 is included in the
+  consolidated governance commit `1704ed4acd6cc38183793ac7d9149dc57519baf9`.
+- Branch: that consolidated commit is reachable from governed tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`, which tracks
+  `origin/codex/governance-bootstrap`.
+- Push: confirmed by the tracked remote branch state.

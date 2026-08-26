@@ -1,27 +1,57 @@
 schemaVersion: 1
-updatedAt: "2026-08-26T09:00:00.000+01:00"
+updatedAt: "2026-08-26T23:19:08.2244741+01:00"
 criteria:
   - id: AC-GOV-01
     feature: Governance policies
     criterion: Owner-controlled invariants, authority, documentation, and review policies exist and are validated.
     priority: governance
-    status: review
+    status: verified
     verification: [governance-test, independent-review]
-    evidence: [.agent/tasks/TASK-002-governance-invariants.md]
+    evidence:
+      - .agent/tasks/TASK-002-governance-invariants.md
+      - .agent/reviews/REVIEW-TASK-002-002.md
+      - .agent/tasks/TASK-008-governance-bootstrap.md
+      - .agent/reviews/REVIEW-TASK-008-002.md
+      - .agent/tasks/TASK-009-lifecycle-traceability.md
+      - .agent/reviews/REVIEW-TASK-009-002.md
   - id: AC-GOV-02
     feature: Delivery controller bootstrap
     criterion: Tasks 1 through 6, the delivery ledger, acceptance traceability, automation dry run, and independent review are complete.
     priority: governance
-    status: review
+    status: verified
     verification: [governance-test, root-gates, independent-review, dry-run]
-    evidence: []
+    evidence:
+      - .agent/tasks/TASK-003-acceptance-ledger.md
+      - .agent/reviews/REVIEW-TASK-003-002.md
+      - .agent/tasks/TASK-004-lifecycle-templates.md
+      - .agent/reviews/REVIEW-TASK-004-002.md
+      - .agent/tasks/TASK-005-role-prompts.md
+      - .agent/reviews/REVIEW-TASK-005-002.md
+      - .agent/tasks/TASK-006-skill-lifecycle.md
+      - .agent/reviews/REVIEW-TASK-006-002.md
+      - .agent/tasks/TASK-007-automation-configuration.md
+      - .agent/reviews/REVIEW-TASK-007-002.md
+      - .agent/tasks/TASK-008-governance-bootstrap.md
+      - .agent/reviews/REVIEW-TASK-008-002.md
+      - .agent/tasks/TASK-009-lifecycle-traceability.md
+      - .agent/reviews/REVIEW-TASK-009-002.md
   - id: AC-GOV-03
     feature: Independent reviewer contract
     criterion: A repository-owned read-only reviewer contract and evidence template enforce exact approved-only commit and push gates.
     priority: governance
-    status: review
+    status: verified
     verification: [content-review, independent-review]
-    evidence: [.agent/tasks/TASK-001-code-reviewer-agent.md]
+    evidence:
+      - .agent/tasks/TASK-001-code-reviewer-agent.md
+      - .agent/reviews/REVIEW-TASK-001-002.md
+      - .agent/tasks/TASK-005-role-prompts.md
+      - .agent/reviews/REVIEW-TASK-005-002.md
+      - .agent/tasks/TASK-008-governance-bootstrap.md
+      - .agent/reviews/REVIEW-TASK-008-002.md
+      - .agent/tasks/TASK-009-lifecycle-traceability.md
+      - .agent/reviews/REVIEW-TASK-009-002.md
+      - .agent/tasks/TASK-010-product-first-planning.md
+      - .agent/reviews/REVIEW-TASK-010-003.md
 
   - id: AC-AUTH-01
     feature: Email sign-up

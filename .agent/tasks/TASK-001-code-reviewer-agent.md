@@ -1,6 +1,6 @@
 # TASK-001 — Create Code Reviewer Agent definition
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-03
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
@@ -75,25 +75,22 @@ never self-approves or makes hidden changes.
 
 ## Review result
 
-Historical independent specification review: approved with no findings.
-
-Independent quality review: initially identified missing bootstrap acceptance
-evidence, ambiguous commit/push wording, incomplete follow-up traceability,
-missing review provenance, and an overly rigid handoff phrase. All findings
-were corrected and the independent re-review approved with no P0–P3 findings.
-
-The historical reviewer model/effort and standalone review report were not
-recorded under the current contract. Fresh Terra/high review of the amended
-contract is pending. Commit/push permission is currently no.
+- Review report: `.agent/reviews/REVIEW-TASK-001-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-After independent review, update this record with the decision, verification,
-Git result, and any follow-up work. The Master Delivery Agent must load
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. The Master Delivery Agent must continue to load
 `.agent/prompts/code-reviewer-agent.md` for every completed-task handoff.
 
 ## Git result
 
 - Implementation commit: `9ded1ad6f06569f799c17ae114e7eed936bb7c73`
-- Branch: `codex/code-reviewer-agent`
-- Push: blocked — this repository currently has no configured Git remote.
+- Reconciled branch tip: `e41931d` is reachable from the governed base.
+- Branch: `codex/code-reviewer-agent` tracks
+  `origin/codex/code-reviewer-agent` at `e41931d`.
+- Push: confirmed on the tracked remote branch.

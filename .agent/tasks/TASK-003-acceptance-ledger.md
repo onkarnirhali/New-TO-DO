@@ -1,6 +1,6 @@
 # TASK-003 — Create acceptance registry and delivery ledger
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-02
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
@@ -69,13 +69,23 @@ distinguish source from verification, validate YAML, and preserve branch scope.
 
 ## Review result
 
-Pending fresh independent Code Reviewer Agent review.
+- Review report: `.agent/reviews/REVIEW-TASK-003-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-Hand off the frozen Task 2 diff, criteria, command output, and repository memory
-to a fresh `gpt-5.6-terra` high reviewer after local gates pass.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. Historical implementation-route metadata remains
+unavailable as recorded above.
 
 ## Git result
 
-Pending approved review.
+- Per-task SHA ownership is not recorded. TASK-003 is included in the
+  consolidated governance commit `1704ed4acd6cc38183793ac7d9149dc57519baf9`.
+- Branch: that consolidated commit is reachable from governed tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`, which tracks
+  `origin/codex/governance-bootstrap`.
+- Push: confirmed by the tracked remote branch state.

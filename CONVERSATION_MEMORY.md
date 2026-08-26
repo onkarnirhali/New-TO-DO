@@ -11,7 +11,7 @@
 **Name:** Planote
 **Tagline concept:** Plan + Note — unified productivity
 **Goal:** Premium cross-platform To-Do + Note-taking app. Kanban task management unified with rich-text notes. Cloud-native, freemium, agentic AI.
-**Status:** Implementation in progress — monorepo and core backend APIs are implemented; the web frontend is still at the shell/auth-UI stage and is not wired end to end. The three-hour Master Delivery Agent Automation is active in dry-run mode until the governance bootstrap is complete.
+**Status:** Implementation in progress — monorepo and core backend APIs are implemented; the web frontend is still at the shell/auth-UI stage and is not wired end to end. The three-hour Master Delivery Agent Automation has an independently approved governance bootstrap on its isolated branch; the primary checkout remains preserved and product work proceeds only through governed worktrees.
 
 ---
 
@@ -166,7 +166,7 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 | Task | Owner | Status |
 |------|-------|--------|
-| Governance bootstrap lifecycle traceability (TASK-009) | Codex implementation agent | Local remediation and V4 review handoff prepared; awaiting fresh independent task-level review. |
+| Governance lifecycle reconciliation (TASK-011) | Master Delivery Agent | Exact independent approval received; focused commit/push is the remaining task action. |
 | Web frontend (Next.js) wired to real backend | Claude (autonomous loop) | App shell (top nav + sidebar) done with static placeholder data. Still needed: Clerk auth pages, real Kanban board wired to the Tasks/Dashboards API, Notes grid/editor, settings — none of these are built yet. |
 | Mobile app (Expo/React Native) | — | Not started — deferred until backend + web are solid |
 
@@ -211,6 +211,18 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 ## Session Log
 
 > Newest entries first.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Reconciled TASK-001–TASK-010, AC-GOV-01–03, and M0 from approved immutable reviews and Git evidence in an isolated worktree. An independent first review found a P1 in the frozen-snapshot proof; the revision-2 byte-framed command reproduced its hash twice and a fresh independent Terra/high review returned exact `approved` with no findings.
+**Changed:** Governance ledger/registry, task lifecycle records, lifecycle plan/reports, review packets/reports, product memory, and this shared memory.
+**Next:** Re-run final gates, commit and push only TASK-011 to `codex/governance-record-reconciliation`, then plan web test infrastructure.
+**Notes:** M1 still has 31 web launch-blocker criteria unverified. The dirty primary checkout remains preserved; no merge, deployment, credential, payment, or live-data action occurred.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Reconciled M0 governance, TASK-001–TASK-010, and AC-GOV-01–AC-GOV-03 from immutable approved reviews, reachable commits, and confirmed tracking branches without rewriting historic reports or inventing per-task commit ownership. Initial TASK-011 review found a P1 in frozen-snapshot reproducibility; revision-2 packet remediation was prepared.
+**Changed:** Governance ledger/registry, TASK-001–TASK-011 lifecycle records, product memory, reconciliation reports/plan, historical and revision-2 reviewer input packets, and this memory record.
+**Next:** Fresh independent Terra/high review of TASK-011 revision 2; after that gate, begin web test infrastructure.
+**Notes:** M1 still has 31 web launch-blocker criteria unverified. The dirty primary checkout remains preserved. TASK-011 itself is not approved, verified, committed, or pushed.
 
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
 **Did:** Added and mechanically enforced product-first planning controls in the Master Delivery Agent contract: each plan now targets the highest-priority ready criterion, one user-visible outcome, a small file scope, explicit dependencies, and a verification stop condition; mobile, billing, and AI remain deferred.

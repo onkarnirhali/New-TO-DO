@@ -1,6 +1,6 @@
 # TASK-004 — Add auditable lifecycle templates
 
-- Status: review
+- Status: verified
 - Acceptance criteria: AC-GOV-02
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
@@ -65,13 +65,23 @@ and all lifecycle templates.
 
 ## Review result
 
-Pending fresh independent Code Reviewer Agent review.
+- Review report: `.agent/reviews/REVIEW-TASK-004-002.md`.
+- Reviewer/model/effort: Fresh independent Code Reviewer Agent,
+  `gpt-5.6-terra` / high (`/root/governance_rereview`), read-only.
+- Decision: `approved`.
+- Open findings: None; the report records no P0–P3 findings.
 
 ## Decisions and handoff
 
-Provide the frozen diff and command evidence to the consolidated governance
-review after Tasks 1–6 are locally complete.
+The exact approved review permits the focused governance commit/push gate; no
+follow-up task is required. Historical implementation-route metadata remains
+unavailable as recorded above.
 
 ## Git result
 
-Pending approved review.
+- Per-task SHA ownership is not recorded. TASK-004 is included in the
+  consolidated governance commit `1704ed4acd6cc38183793ac7d9149dc57519baf9`.
+- Branch: that consolidated commit is reachable from governed tip
+  `4ee22c055b6258fa09d05d67e87ae192f6c4ca5e`, which tracks
+  `origin/codex/governance-bootstrap`.
+- Push: confirmed by the tracked remote branch state.
