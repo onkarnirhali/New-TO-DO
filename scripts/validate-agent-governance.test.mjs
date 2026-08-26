@@ -31,7 +31,7 @@ async function createGovernanceFixture({ omit } = {}) {
 async function createRepositoryFixture({ omit, tasks = [], taskRecords = {} } = {}) {
   const root = await createGovernanceFixture();
   const routingPrompt =
-    "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification\n";
+    "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification. Prioritize actual code implementation and product development. Select the highest-priority ready acceptance criterion, one user-visible outcome, and a small allowed file set with explicit dependencies and a clear verification stop condition. Do not replan the entire project. Defer mobile, billing, and AI.\n";
   const completeSkill = `# Skill
 ## Purpose
 ## Trigger conditions
@@ -278,6 +278,39 @@ test("accepts a prompt with the generic governance controls", () => {
       "role.md",
       "Document documentation. Require evidence and acceptance criteria. Respect authority boundaries. gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification.",
     ),
+  );
+});
+
+test("rejects a Master prompt without product-first planning controls", () => {
+  assert.throws(
+    () =>
+      governance.validatePrompt(
+        "master-delivery-agent.md",
+        "Document documentation. Require evidence and acceptance criteria. Respect authority boundaries. gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification.",
+      ),
+    /Master prompt must require product-first planning controls/,
+  );
+});
+
+test("rejects a Master prompt without explicit dependencies", () => {
+  assert.throws(
+    () =>
+      governance.validatePrompt(
+        "master-delivery-agent.md",
+        "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification. Prioritize actual code implementation and product development. Select the highest-priority ready acceptance criterion, one user-visible outcome, and a small allowed file set. Do not replan the entire project. Defer mobile, billing, and AI. Include a clear verification stop condition.",
+      ),
+    /Master prompt must require product-first planning controls/,
+  );
+});
+
+test("rejects a Master prompt without a verification stop condition", () => {
+  assert.throws(
+    () =>
+      governance.validatePrompt(
+        "master-delivery-agent.md",
+        "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification. Prioritize actual code implementation and product development. Select the highest-priority ready acceptance criterion, one user-visible outcome, and a small allowed file set. Do not replan the entire project. Defer mobile, billing, and AI. Include explicit dependencies.",
+      ),
+    /Master prompt must require product-first planning controls/,
   );
 });
 

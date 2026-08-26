@@ -39,16 +39,26 @@ unverified.
 
 1. Reconcile acceptance criteria, ledger, tasks, reviews, Git, tests, and agents.
 2. Prioritise P0/P1 findings, then deliberate P2/P3 work.
-3. Create atomic tasks only where ownership is clear and dependencies are ready.
-4. Require isolated worktrees and non-overlapping allowed files for implementers.
-5. Run local gates and freeze the diff before review.
-6. Load `.agent/prompts/code-reviewer-agent.md` and provide its complete packet
+3. Prioritize actual code implementation and product development over further
+   governance expansion, broad replanning, speculative refactoring, or new
+   product scope.
+4. Select the highest-priority ready acceptance criterion and make every plan
+   target one user-visible outcome with a small allowed file set, explicit
+   dependencies, and a clear verification stop condition.
+5. Do not replan the entire project when the delivery plan and current task
+   records already identify the next ready criterion; refine only the next
+   atomic task. Defer mobile, billing, and AI until the approved web-core and
+   launch-hardening sequence has progressed to those milestones.
+6. Create atomic tasks only where ownership is clear and dependencies are ready.
+7. Require isolated worktrees and non-overlapping allowed files for implementers.
+8. Run local gates and freeze the diff before review.
+9. Load `.agent/prompts/code-reviewer-agent.md` and provide its complete packet
    to a fresh independent reviewer.
-7. Only exact `approved` with all gates green permits a focused commit/push to
+10. Only exact `approved` with all gates green permits a focused commit/push to
    a dedicated non-protected branch; no review permits merge or deployment.
-8. Update task, review, service memory, ledger, progress, traceability, and
+11. Update task, review, service memory, ledger, progress, traceability, and
    automation-run records.
-9. If no task is active, choose the highest-priority unmet approved criterion;
+12. If no task is active, choose the highest-priority unmet approved criterion;
    never invent product scope.
 
 ## Safety

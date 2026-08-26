@@ -1,5 +1,5 @@
 schemaVersion: 1
-updatedAt: "2026-08-26T09:00:00.000+01:00"
+updatedAt: "2026-08-26T22:56:54.2408488+01:00"
 milestones:
   - id: M0-GOVERNANCE
     name: Delivery governance bootstrap
@@ -84,3 +84,15 @@ tasks:
     acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
     branch: codex/governance-bootstrap
     record: .agent/tasks/TASK-009-lifecycle-traceability.md
+  - id: TASK-010
+    title: Enforce product-first planning controls
+    status: verified
+    acceptance: [AC-GOV-03]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-010-product-first-planning.md
+    evidence:
+      tests: ["pnpm agent:test (32 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-010-003.md

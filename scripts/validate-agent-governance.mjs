@@ -251,7 +251,7 @@ function validateLedgerTaskRecord(task, record) {
   validateHistoricalProvenance(record, metadata, task.id);
 }
 
-export function validatePrompt(_name, prompt) {
+export function validatePrompt(name, prompt) {
   const required = [/documentation/i, /evidence/i, /acceptance criteria/i, /authority boundaries/i];
   if (required.some((pattern) => !pattern.test(prompt))) {
     throw new Error(
@@ -271,6 +271,21 @@ export function validatePrompt(_name, prompt) {
     throw new Error(
       "Prompt must require Terra ultra planning, Terra high implementation, and Luna medium routine verification",
     );
+  }
+  if (name === "master-delivery-agent.md") {
+    const productFirstPlanning = [
+      /prioriti[sz]e actual code implementation and product development/i,
+      /highest-priority ready acceptance criterion/i,
+      /one user-visible outcome/i,
+      /small allowed file set/i,
+      /explicit\s+dependencies/i,
+      /clear verification stop condition/i,
+      /do not replan the entire project/i,
+      /defer mobile, billing, and AI/i,
+    ];
+    if (productFirstPlanning.some((pattern) => !pattern.test(prompt))) {
+      throw new Error("Master prompt must require product-first planning controls");
+    }
   }
   return prompt;
 }

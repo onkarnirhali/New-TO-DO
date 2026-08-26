@@ -213,6 +213,12 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 > Newest entries first.
 
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Added and mechanically enforced product-first planning controls in the Master Delivery Agent contract: each plan now targets the highest-priority ready criterion, one user-visible outcome, a small file scope, explicit dependencies, and a verification stop condition; mobile, billing, and AI remain deferred.
+**Changed:** `.agent/prompts/master-delivery-agent.md`, governance validator/tests, TASK-010 ledger/task/review records, `CONVERSATION_MEMORY.md`.
+**Next:** Commit and push the independently approved TASK-010 change on `codex/governance-bootstrap`; then choose the next web-foundation criterion.
+**Notes:** Three fresh independent Terra/high reviews were recorded. Initial P1 findings on enforcement and traceability were remediated; final REVIEW-TASK-010-003 approved with no P0–P3 findings. Fresh governance tests pass 32/32; root lint/type-check/build pass with 10 known web warnings; root test has no configured package tasks.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
 **Did:** Remediated TASK-009 lifecycle traceability in the isolated governance worktree. Added red/green fixture coverage for missing task records, task-ID/acceptance mismatch, missing escalation, and generic model routes; connected ledger task records to repository validation; reconciled historical evidence honestly; and prepared the initial P1 review record.
 **Changed:** `scripts/validate-agent-governance.{mjs,test.mjs}`, `.agent/delivery-ledger.yaml`, TASK-001–TASK-009 records, `.agent/reviews/**`, and this memory record.
 **Next:** Freeze V4 reviewer handoff and obtain a fresh independent `gpt-5.6-terra` / high task-level decision. No task is approved, verified, committed, or pushed by this work.
