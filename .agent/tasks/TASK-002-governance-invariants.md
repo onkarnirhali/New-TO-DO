@@ -1,13 +1,20 @@
 # TASK-002 — Add delivery governance invariants
 
-- Status: verified
+- Status: review
 - Acceptance criteria: AC-GOV-01
 - Owner: Master Delivery Agent
 - Assigned agent: implementation-agent
 - Branch/worktree: `codex/governance-bootstrap`
-- Model/effort: `gpt-5.6-luna` / medium
+- Model/effort: gpt-5.6-luna / medium
 - Complexity rationale: Bounded documentation and a small Node validator with a
   clear test-first specification.
+- Escalation: none
+
+## Historical provenance
+
+This factual Luna/medium route predates the current policy that reserves
+Terra/high for implementation. It is retained as recorded evidence, not
+retroactively normalized.
 
 ## Scope
 
@@ -67,13 +74,17 @@ policy files and a validator whose failure clearly identifies a missing policy.
 
 - `node scripts/validate-agent-governance.test.mjs`: 3 passed, 0 failed.
 - `git diff --check`: passed.
+- Consolidated gate: `pnpm agent:validate`, 22/22 governance tests, lint,
+  type-check, build, and `git diff --check` passed; root `pnpm test` executed
+  zero configured package test tasks.
 
 ## Review result
 
-Initial independent review found a P1 directory-path false positive in the
+Historical independent review found a P1 directory-path false positive in the
 validator. The targeted regression test and regular-file check were added.
-Independent re-review approved the corrected task with no P0–P3 findings.
-Commit/push permitted: yes, to the dedicated non-protected branch only.
+That re-review was recorded only in this task, without the now-required review
+artifact and model/effort provenance. Fresh Terra/high review is pending;
+commit/push permission is currently no.
 
 ## Decisions and handoff
 

@@ -166,6 +166,7 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 | Task | Owner | Status |
 |------|-------|--------|
+| Governance bootstrap lifecycle traceability (TASK-009) | Codex implementation agent | Local remediation and V4 review handoff prepared; awaiting fresh independent task-level review. |
 | Web frontend (Next.js) wired to real backend | Claude (autonomous loop) | App shell (top nav + sidebar) done with static placeholder data. Still needed: Clerk auth pages, real Kanban board wired to the Tasks/Dashboards API, Notes grid/editor, settings — none of these are built yet. |
 | Mobile app (Expo/React Native) | — | Not started — deferred until backend + web are solid |
 
@@ -210,6 +211,24 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 ## Session Log
 
 > Newest entries first.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Remediated TASK-009 lifecycle traceability in the isolated governance worktree. Added red/green fixture coverage for missing task records, task-ID/acceptance mismatch, missing escalation, and generic model routes; connected ledger task records to repository validation; reconciled historical evidence honestly; and prepared the initial P1 review record.
+**Changed:** `scripts/validate-agent-governance.{mjs,test.mjs}`, `.agent/delivery-ledger.yaml`, TASK-001–TASK-009 records, `.agent/reviews/**`, and this memory record.
+**Next:** Freeze V4 reviewer handoff and obtain a fresh independent `gpt-5.6-terra` / high task-level decision. No task is approved, verified, committed, or pushed by this work.
+**Notes:** Red run: 24 passed / 5 failed with expected missing-rejection assertions; green run: 29 passed / 0 failed. Final local gates passed; lint/build retain 10 existing web return-type warnings and root `pnpm test` has zero configured tasks.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Enforced the owner’s routing refinement in all executable role contracts: Terra/ultra for plans and major decisions, Terra/high for every implementation and independent review, and Luna/medium only for documented routine verification.
+**Changed:** `.agent/prompts/*`, `.agent/skills/promoted/*`, `.agent/memory/product.md`, `scripts/validate-agent-governance.*`; active Master Delivery automation now runs Terra/ultra.
+**Next:** Refresh the frozen reviewer packet to include this routing change, obtain fresh independent Terra/high approval, then rerun gates and commit only exact-approved work.
+**Notes:** The validator now rejects any role contract that omits one of the three required routes and still rejects Sol routing. Luna verification is explicitly non-implementing and non-approving.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Completed the repository-owned governance bootstrap implementation in an isolated worktree: policies, registry/ledger, templates, role prompts, skill lifecycle, automation contract, validator, baseline reports, and reviewer packets. Updated routing to Terra/Luna only and the active automation to Terra/high.
+**Changed:** `.agent/**`, root `package.json`, `pnpm-lock.yaml`, `scripts/validate-agent-governance.*`, and `CONVERSATION_MEMORY.md` on `codex/governance-bootstrap`; primary checkout untouched.
+**Next:** Obtain fresh independent Terra/high review for TASK-001–008, then rerun gates, commit, and push only exact-approved work.
+**Notes:** Governance tests pass 23/23; lint/type/build pass with 10 existing web warnings; root test has zero configured tasks. Three reviewer attempts were blocked by an account usage limit, so no review decision or commit/push exists.
 
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-sol
 **Did:** Merged the approved Code Reviewer Agent contract into `main`, pushed it, and began the isolated governance bootstrap. Implemented TASK-002 governance policies and a presence validator test-first.

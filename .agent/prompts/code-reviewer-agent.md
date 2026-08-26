@@ -23,9 +23,23 @@ Do not begin until you have all of the following:
 - Implementer evidence: commands run, results, test coverage, assumptions, and
   documentation updates.
 - Relevant repository conventions, service memory, and prior review findings.
+- Implementer model, reasoning effort, complexity rationale, and escalation log.
+- The authority boundaries that apply to this task and handoff.
 
 If any required input is missing, return `blocked`; list the missing evidence
 and do not infer that a criterion is satisfied.
+
+This review must run as a fresh independent `gpt-5.6-terra` reviewer with high
+reasoning. Record the reviewer model, effort, and why the task warrants that
+routing in the review documentation.
+
+## Routing boundary
+
+`gpt-5.6-terra` / ultra is reserved for planning and major design decisions;
+`gpt-5.6-terra` / high is required for implementation and this independent
+approval review. `gpt-5.6-luna` / medium may provide routine verification by
+executing documented checks against documented guidelines and criteria, but it
+cannot approve a task or substitute for this review.
 
 ## Review workflow
 

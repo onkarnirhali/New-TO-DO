@@ -1,0 +1,355 @@
+schemaVersion: 1
+updatedAt: "2026-08-26T09:00:00.000+01:00"
+criteria:
+  - id: AC-GOV-01
+    feature: Governance policies
+    criterion: Owner-controlled invariants, authority, documentation, and review policies exist and are validated.
+    priority: governance
+    status: review
+    verification: [governance-test, independent-review]
+    evidence: [.agent/tasks/TASK-002-governance-invariants.md]
+  - id: AC-GOV-02
+    feature: Delivery controller bootstrap
+    criterion: Tasks 1 through 6, the delivery ledger, acceptance traceability, automation dry run, and independent review are complete.
+    priority: governance
+    status: review
+    verification: [governance-test, root-gates, independent-review, dry-run]
+    evidence: []
+  - id: AC-GOV-03
+    feature: Independent reviewer contract
+    criterion: A repository-owned read-only reviewer contract and evidence template enforce exact approved-only commit and push gates.
+    priority: governance
+    status: review
+    verification: [content-review, independent-review]
+    evidence: [.agent/tasks/TASK-001-code-reviewer-agent.md]
+
+  - id: AC-AUTH-01
+    feature: Email sign-up
+    criterion: A visitor can create an account with name, email, and password, receive accessible verification errors, establish a session, and reach /app.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, real-clerk-smoke]
+    evidence: []
+  - id: AC-AUTH-02
+    feature: Email sign-in
+    criterion: Valid credentials create a Clerk session and open /app while invalid credentials show a safe clear error.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, real-clerk-smoke]
+    evidence: []
+  - id: AC-AUTH-03
+    feature: Google OAuth
+    criterion: Clerk oauth_google completes through /sso-callback for new and returning users with safe cancel and error handling.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, real-clerk-smoke]
+    evidence: []
+  - id: AC-AUTH-04
+    feature: Password reset
+    criterion: A user can request and complete Clerk email-code password reset without logging secrets.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, real-clerk-smoke]
+    evidence: []
+  - id: AC-AUTH-05
+    feature: Route protection
+    criterion: Unauthenticated /app routes are denied, public auth routes remain reachable, and API requests use a fresh Clerk bearer token.
+    priority: launch-blocker
+    status: not-started
+    verification: [middleware-test, api-client-test, browser-smoke]
+    evidence: []
+    implementationNotes: API guards exist, but the checked-in web app lacks Clerk middleware and token wiring.
+  - id: AC-AUTH-06
+    feature: Account profile
+    criterion: Trusted Clerk identity or initials appear in navigation and sign-out ends the session.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, browser-smoke]
+    evidence: []
+  - id: AC-AUTH-07
+    feature: User bootstrap
+    criterion: First protected access synchronizes one active local user and exactly one starter board with To Do, In Progress, and Done columns.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-integration-test, concurrency-test]
+    evidence: []
+
+  - id: AC-SHELL-01
+    feature: Responsive app shell
+    criterion: Authenticated pages provide accessible sidebar, top navigation, skip link, and main target at desktop and narrow widths.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, accessibility-test, browser-smoke]
+    evidence: []
+    implementationNotes: A desktop shell exists, but responsive and accessibility criteria are not fully evidenced.
+  - id: AC-SHELL-02
+    feature: Dashboard and Notes navigation
+    criterion: Users can navigate among /app, dashboards, and Notes without broken handoffs.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, browser-smoke]
+    evidence: []
+  - id: AC-SHELL-03
+    feature: Theme support
+    criterion: Dark mode defaults, light mode uses the approved palette, and user preference can be changed and retained.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, visual-smoke]
+    evidence: []
+    implementationNotes: Dark mode is hardcoded; switching and persistence are absent.
+  - id: AC-SHELL-04
+    feature: Accessibility baseline
+    criterion: Focus, names, dialogs, non-colour status, and key flows pass automated accessibility checks.
+    priority: launch-blocker
+    status: not-started
+    verification: [accessibility-test, keyboard-review]
+    evidence: []
+
+  - id: AC-KANBAN-01
+    feature: Dashboard CRUD
+    criterion: Users create, rename, and remove only owned dashboards and each new dashboard atomically gets three default columns.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, browser-smoke]
+    evidence: []
+    implementationNotes: Dashboard API source exists, but default-column atomicity and web workflow are not complete on this branch.
+  - id: AC-KANBAN-02
+    feature: Column management
+    criterion: Users add, rename, order, and safely remove columns without hiding placed tasks.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test]
+    evidence: []
+  - id: AC-KANBAN-03
+    feature: Board view
+    criterion: Owned columns and tasks render with understandable loading, empty, and retry states.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, browser-smoke]
+    evidence: []
+  - id: AC-KANBAN-04
+    feature: Drag and drop
+    criterion: Pointer and keyboard moves preserve order, support empty columns, and roll back safely on failure.
+    priority: launch-blocker
+    status: not-started
+    verification: [web-test, accessibility-test, browser-smoke]
+    evidence: []
+  - id: AC-KANBAN-05
+    feature: Shared tasks
+    criterion: Dashboard placements move independently and the final placement cannot be removed.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test]
+    evidence: []
+
+  - id: AC-TASK-01
+    feature: Task CRUD
+    criterion: Users create, edit, complete, and delete owned tasks with validated title, description, and Due Date.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, browser-smoke]
+    evidence: []
+    implementationNotes: Task API source exists; committed tests and the web workflow do not.
+  - id: AC-TASK-02
+    feature: Task sharing
+    criterion: An understandable dialog adds or removes valid dashboard placements and rejects foreign or duplicate placements.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test]
+    evidence: []
+  - id: AC-TASK-03
+    feature: Note linking
+    criterion: Owned tasks and notes link or unlink safely, including atomic create-and-link and password proof for protected notes.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, security-review]
+    evidence: []
+  - id: AC-TASK-04
+    feature: Time reminders
+    criterion: Users create, update, and remove valid time reminders while web accurately describes mobile delivery.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test]
+    evidence: []
+  - id: AC-TASK-05
+    feature: Location reminders
+    criterion: Mobile collects coordinates and radius, gates by entitlement, and pauses rather than deletes on downgrade.
+    priority: later-milestone
+    status: deferred
+    verification: [mobile-test, entitlement-test, device-smoke]
+    evidence: []
+
+  - id: AC-NOTE-01
+    feature: Notes grid
+    criterion: Owned notes render responsively; unlocked cards show server previews and locked cards reveal only title and lock state.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, browser-smoke]
+    evidence: []
+  - id: AC-NOTE-02
+    feature: Note CRUD
+    criterion: Users create, rename, edit, and delete notes reachable from both task and Notes views.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test]
+    evidence: []
+    implementationNotes: Note API source exists; committed end-to-end web evidence does not.
+  - id: AC-NOTE-03
+    feature: Rich text
+    criterion: The editor supports approved formatting and the server rejects unsupported document JSON.
+    priority: launch-blocker
+    status: not-started
+    verification: [schema-test, editor-test, browser-smoke]
+    evidence: []
+  - id: AC-NOTE-04
+    feature: Autosave and conflicts
+    criterion: Debounced single-flight revision saves preserve drafts on authentication, authorization, and conflict errors.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, editor-test, concurrency-test]
+    evidence: []
+  - id: AC-NOTE-05
+    feature: Note passwords
+    criterion: Paid password changes require proof and locked responses reveal no content or linked-task titles.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, security-review]
+    evidence: []
+    implementationNotes: Password-lock API source exists, but entitlements and all mutation protections are incomplete on this branch.
+  - id: AC-NOTE-06
+    feature: Downgrade preservation
+    criterion: Existing locked notes remain usable with proof while new locks and password changes are disabled after downgrade.
+    priority: launch-blocker
+    status: not-started
+    verification: [entitlement-test, api-test, web-test]
+    evidence: []
+  - id: AC-NOTE-07
+    feature: Basic images
+    criterion: Private uploads validate size, type, and dimensions without exposing R2 secrets or deleting persisted images prematurely.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, private-r2-smoke, security-review]
+    evidence: []
+  - id: AC-NOTE-08
+    feature: Private protected images
+    criterion: Locked images use authenticated same-origin proof and revocable blob URLs with no generic lock bypass.
+    priority: launch-blocker
+    status: not-started
+    verification: [api-test, web-test, security-review]
+    evidence: []
+  - id: AC-NOTE-09
+    feature: Advanced image formatting
+    criterion: Paid wrap, resize, and captions preserve existing formatting but disable new changes after downgrade.
+    priority: launch-blocker
+    status: not-started
+    verification: [editor-test, entitlement-test]
+    evidence: []
+  - id: AC-NOTE-10
+    feature: AI rephrase
+    criterion: Entitlement-gated rephrase preserves original text until acceptance and logs no secret prompts.
+    priority: later-milestone
+    status: deferred
+    verification: [web-test, provider-smoke, security-review]
+    evidence: []
+
+  - id: AC-OPS-01
+    feature: Admin user management
+    criterion: Master admins list and activate users without data deletion while non-admins are denied.
+    priority: pre-launch
+    status: not-started
+    verification: [api-test, web-test, authorization-test]
+    evidence: []
+  - id: AC-OPS-02
+    feature: Platform health
+    criterion: Admin health reports API, database, and storage readiness without exposing secrets.
+    priority: pre-launch
+    status: not-started
+    verification: [api-test, security-review]
+    evidence: []
+  - id: AC-OPS-03
+    feature: Clerk webhooks
+    criterion: Verified webhook signatures synchronize and deactivate users without starter-data races or duplication.
+    priority: pre-launch
+    status: not-started
+    verification: [api-integration-test, concurrency-test, real-clerk-smoke]
+    evidence: []
+    implementationNotes: Signature verification and user sync source exist; race and starter-data guarantees are not evidenced.
+  - id: AC-OPS-04
+    feature: Private R2 release check
+    criterion: R2 is non-public and browser assets expose no object URLs, presigned URLs, or credentials; recovery is tested.
+    priority: pre-launch
+    status: not-started
+    verification: [private-r2-smoke, bundle-audit, security-review]
+    evidence: []
+  - id: AC-OPS-05
+    feature: Monitoring and recovery
+    criterion: Structured errors and durable cleanup retries recover safely after process or storage failure.
+    priority: pre-launch
+    status: not-started
+    verification: [integration-test, failure-injection-test]
+    evidence: []
+
+  - id: AC-MOBILE-01
+    feature: Native applications
+    criterion: Expo clients authenticate and synchronize private data across responsive phone and tablet layouts.
+    priority: later-milestone
+    status: deferred
+    verification: [mobile-test, device-smoke]
+    evidence: []
+  - id: AC-MOBILE-02
+    feature: Offline sync
+    criterion: A durable offline queue retries safely and resolves conflicts with a documented user-visible rule.
+    priority: later-milestone
+    status: deferred
+    verification: [mobile-test, offline-integration-test]
+    evidence: []
+  - id: AC-MOBILE-03
+    feature: Push reminders
+    criterion: Time and entitled location reminders use native permissions with clear opt-in and failure states.
+    priority: later-milestone
+    status: deferred
+    verification: [mobile-test, device-smoke]
+    evidence: []
+  - id: AC-MOBILE-04
+    feature: Speech and OCR
+    criterion: Paid speech and OCR are explicit consented actions with loading and error states and never run silently.
+    priority: later-milestone
+    status: deferred
+    verification: [mobile-test, provider-smoke]
+    evidence: []
+
+  - id: AC-EXT-01
+    feature: Razorpay billing
+    criterion: Server-verified web payment events drive entitlements and preserve data across failure, cancellation, and downgrade.
+    priority: later-milestone
+    status: deferred
+    verification: [billing-test, provider-smoke, security-review]
+    evidence: []
+  - id: AC-EXT-02
+    feature: RevenueCat billing
+    criterion: Native purchase and restore synchronize trusted entitlement without trusting client-supplied tier data.
+    priority: later-milestone
+    status: deferred
+    verification: [billing-test, provider-smoke, security-review]
+    evidence: []
+  - id: AC-EXT-03
+    feature: Settings
+    criterion: Users manage theme, account, notifications, and subscription state without exposing provider secrets.
+    priority: later-milestone
+    status: deferred
+    verification: [web-test, mobile-test, browser-smoke]
+    evidence: []
+  - id: AC-EXT-04
+    feature: Collaboration
+    criterion: Collaboration remains deferred until a separately approved ownership and permissions specification exists.
+    priority: later-milestone
+    status: deferred
+    verification: [owner-approved-spec]
+    evidence: []
+  - id: AC-EXT-05
+    feature: Chrome extension
+    criterion: The extension remains deferred until product usage warrants an approved milestone.
+    priority: later-milestone
+    status: deferred
+    verification: [owner-approved-milestone]
+    evidence: []

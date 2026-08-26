@@ -3,6 +3,8 @@
   "private": true,
   "packageManager": "pnpm@9.1.0",
   "scripts": {
+    "agent:validate": "node scripts/validate-agent-governance.mjs",
+    "agent:test": "node --test scripts/validate-agent-governance.test.mjs",
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
@@ -11,8 +13,9 @@
     "clean": "turbo clean && rimraf node_modules"
   },
   "devDependencies": {
+    "rimraf": "^5.0.0",
     "turbo": "^2.1.0",
-    "rimraf": "^5.0.0"
+    "yaml": "^2.9.0"
   },
   "engines": {
     "node": ">=20.0.0",

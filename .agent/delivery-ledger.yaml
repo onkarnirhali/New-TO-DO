@@ -1,0 +1,86 @@
+schemaVersion: 1
+updatedAt: "2026-08-26T09:00:00.000+01:00"
+milestones:
+  - id: M0-GOVERNANCE
+    name: Delivery governance bootstrap
+    status: active
+    acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
+  - id: M1-WEB-FOUNDATION
+    name: Web foundation
+    status: planned
+    acceptance: [AC-AUTH-01, AC-AUTH-02, AC-AUTH-03, AC-AUTH-04, AC-AUTH-05, AC-AUTH-06, AC-AUTH-07, AC-SHELL-01, AC-SHELL-02, AC-SHELL-03, AC-SHELL-04]
+  - id: M2-WEB-CORE
+    name: Web productivity core
+    status: planned
+    acceptance: [AC-KANBAN-01, AC-KANBAN-02, AC-KANBAN-03, AC-KANBAN-04, AC-KANBAN-05, AC-TASK-01, AC-TASK-02, AC-TASK-03, AC-TASK-04]
+  - id: M3-WEB-NOTES
+    name: Web Notes
+    status: planned
+    acceptance: [AC-NOTE-01, AC-NOTE-02, AC-NOTE-03, AC-NOTE-04, AC-NOTE-05, AC-NOTE-06, AC-NOTE-07, AC-NOTE-08, AC-NOTE-09]
+  - id: M4-LAUNCH-HARDENING
+    name: Launch hardening
+    status: planned
+    acceptance: [AC-OPS-01, AC-OPS-02, AC-OPS-03, AC-OPS-04, AC-OPS-05]
+  - id: M5-MOBILE
+    name: Mobile
+    status: deferred
+    acceptance: [AC-TASK-05, AC-MOBILE-01, AC-MOBILE-02, AC-MOBILE-03, AC-MOBILE-04]
+  - id: M6-BILLING-AI
+    name: Billing, AI, and extensions
+    status: deferred
+    acceptance: [AC-NOTE-10, AC-EXT-01, AC-EXT-02, AC-EXT-03, AC-EXT-04, AC-EXT-05]
+tasks:
+  - id: TASK-001
+    title: Create Code Reviewer Agent definition
+    status: review
+    acceptance: [AC-GOV-03]
+    branch: codex/code-reviewer-agent
+    record: .agent/tasks/TASK-001-code-reviewer-agent.md
+  - id: TASK-002
+    title: Add delivery governance invariants
+    status: review
+    acceptance: [AC-GOV-01]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-002-governance-invariants.md
+  - id: TASK-003
+    title: Create acceptance registry and delivery ledger
+    status: review
+    acceptance: [AC-GOV-02]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-003-acceptance-ledger.md
+  - id: TASK-004
+    title: Add auditable lifecycle templates
+    status: review
+    acceptance: [AC-GOV-02]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-004-lifecycle-templates.md
+  - id: TASK-005
+    title: Add governed agent role prompts
+    status: review
+    acceptance: [AC-GOV-02, AC-GOV-03]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-005-role-prompts.md
+  - id: TASK-006
+    title: Add reusable skill lifecycle
+    status: review
+    acceptance: [AC-GOV-02]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-006-skill-lifecycle.md
+  - id: TASK-007
+    title: Configure the three-hour delivery controller
+    status: review
+    acceptance: [AC-GOV-02]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-007-automation-configuration.md
+  - id: TASK-008
+    title: Reconcile governance bootstrap baseline
+    status: review
+    acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-008-governance-bootstrap.md
+  - id: TASK-009
+    title: Enforce task-record lifecycle traceability
+    status: review
+    acceptance: [AC-GOV-01, AC-GOV-02, AC-GOV-03]
+    branch: codex/governance-bootstrap
+    record: .agent/tasks/TASK-009-lifecycle-traceability.md
