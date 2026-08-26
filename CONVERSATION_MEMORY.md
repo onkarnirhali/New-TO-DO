@@ -212,6 +212,12 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 > Newest entries first.
 
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-sol
+**Did:** Merged the approved Code Reviewer Agent contract into `main`, pushed it, and began the isolated governance bootstrap. Implemented TASK-002 governance policies and a presence validator test-first.
+**Changed:** `.agent/governance/*`, `.agent/tasks/TASK-002-governance-invariants.md`, `scripts/validate-agent-governance.*`, `CONVERSATION_MEMORY.md`.
+**Next:** Obtain independent review for TASK-002 before commit/push; then add acceptance registry and delivery ledger.
+**Notes:** Primary workspace user changes remain untouched. `pnpm test` baseline ran successfully but has zero discovered package tests.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-sol
 **Did:** Connected the project to the owner-created private GitHub repository and added the root README on an isolated branch.
 **Changed:** `README.md`, `CONVERSATION_MEMORY.md`.
 **Next:** Push the README commit to the remote `main` branch and retain its source branch for traceability.
