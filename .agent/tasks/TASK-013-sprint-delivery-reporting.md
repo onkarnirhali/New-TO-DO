@@ -47,6 +47,7 @@ Implement `.agent/plans/2026-08-27-sprint-delivery-reporting.md` test-first in t
 | 2026-08-27T11:39:00+01:00 | RED: reproduced full-validator line-wrap mismatch | `pnpm agent:validate` exited 1 with `Master prompt must require the 90-minute delivery sprint contract`; a new line-wrapped prompt test then made `pnpm agent:test` exit 1 (34 passed, 1 failed), isolating literal-space matching across Markdown line wraps. |
 | 2026-08-27T11:40:00+01:00 | GREEN: made sprint-contract whitespace matching line-wrap safe | `pnpm agent:test` exited 0 (35 passed, 0 failed) and `pnpm agent:validate` exited 0 (`Agent governance validation passed.`). |
 | 2026-08-27T11:54:31.7575915+01:00 | Completed independent review and activated approved live contract | Fresh Terra/high `REVIEW-TASK-013-002.md` approved V2 with P0/P1/P2/P3 = 0/0/0/0. Codex Automation `new-todo-master-delivery-agent` was updated within owner-approved scope; cadence, Terra/ultra route, and notification policy were preserved. |
+| 2026-08-27T11:58:00+01:00 | Committed and pushed reviewed implementation | Focused implementation commit `8190f363d0bbb766db62fdff5e948b46c5a755fe` was pushed to dedicated non-protected branch `codex/task-013-sprint-delivery-reporting`; primary checkout and protected branches were untouched. |
 
 ## Files changed
 
@@ -86,6 +87,6 @@ The live automation was updated only after the repository-owned contract was tes
 
 ## Git result
 
-- Commit: Pending final post-activation gates.
+- Commit: `8190f363d0bbb766db62fdff5e948b46c5a755fe` — `feat(governance): TASK-013 enforce sprint reporting`.
 - Branch: `codex/task-013-sprint-delivery-reporting`.
-- Push: Forbidden until the same conditions are met.
+- Push: Pushed to `origin/codex/task-013-sprint-delivery-reporting`; no merge or deployment.
