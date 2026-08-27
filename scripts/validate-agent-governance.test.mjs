@@ -32,6 +32,8 @@ async function createRepositoryFixture({ omit, tasks = [], taskRecords = {} } = 
   const root = await createGovernanceFixture();
   const routingPrompt =
     "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification. Prioritize actual code implementation and product development. Select the highest-priority ready acceptance criterion, one user-visible outcome, and a small allowed file set with explicit dependencies and a clear verification stop condition. Do not replan the entire project. Defer mobile, billing, and AI.\n";
+  const masterDeliveryPrompt =
+    `${routingPrompt}Run a 90-minute delivery sprint: 10 minutes for reconcile and plan, 45 minutes for implementation, 20 minutes for independent review and P0/P1 follow-up, and 15 minutes for verification and reporting. Start no new work after the 90-minute deadline. Use no more than two independent implementation subagents and deliver one small user-visible release-candidate outcome per sprint. Complete a provider readiness preflight before Clerk, database, storage, or external work. Report release-candidate verified, implemented-but-unverified, remaining, and deferred status in plain English under three minutes, including implementation progress, blockers, next action, and How to test locally. Use the exact heading Onkar We need your help only when an owner-controlled external dependency needs action.\n`;
   const completeSkill = `# Skill
 ## Purpose
 ## Trigger conditions
@@ -75,7 +77,7 @@ tasks:${tasks
     ".agent/templates/adr.md": "# ADR template\n",
     ".agent/templates/progress-report.md": "# Progress template\n",
     ".agent/templates/agent-handoff.md": "# Handoff template\n",
-    ".agent/prompts/master-delivery-agent.md": routingPrompt,
+    ".agent/prompts/master-delivery-agent.md": masterDeliveryPrompt,
     ".agent/prompts/implementation-agent.md": routingPrompt,
     ".agent/prompts/code-reviewer-agent.md": routingPrompt,
     ".agent/prompts/security-reviewer-agent.md": routingPrompt,
@@ -93,6 +95,9 @@ tasks:${tasks
       mode: "dry-run-first",
       promptFile: ".agent/prompts/master-delivery-agent.md",
       reportDirectory: ".agent/reports/automation-runs",
+      sprintBudgetMinutes: 90,
+      maxImplementationAgents: 2,
+      reportReadLimitMinutes: 3,
     }),
     ".agent/automations/master-delivery-controller.md": "# Automation setup\n",
     ".agent/reports/automation-runs/.gitkeep": "",
@@ -314,6 +319,26 @@ test("rejects a Master prompt without a verification stop condition", () => {
   );
 });
 
+test("rejects a Master prompt without the 90-minute delivery sprint contract", () => {
+  assert.throws(
+    () =>
+      governance.validatePrompt(
+        "master-delivery-agent.md",
+        "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification. Prioritize actual code implementation and product development. Select the highest-priority ready acceptance criterion, one user-visible outcome, and a small allowed file set with explicit dependencies and a clear verification stop condition. Do not replan the entire project. Defer mobile, billing, and AI.",
+      ),
+    /Master prompt must require the 90-minute delivery sprint contract/,
+  );
+});
+
+test("accepts a line-wrapped complete 90-minute delivery sprint contract", () => {
+  assert.doesNotThrow(() =>
+    governance.validatePrompt(
+      "master-delivery-agent.md",
+      "Documentation evidence acceptance criteria authority boundaries gpt-5.6-terra / ultra gpt-5.6-terra / high gpt-5.6-luna / medium routine verification. Prioritize actual code implementation and product development. Select the highest-priority ready acceptance criterion, one user-visible outcome, and a small allowed file set with explicit dependencies and a clear verification stop condition. Do not replan the entire project. Defer mobile, billing, and AI. Run a 90-minute delivery sprint: spend 10 minutes to reconcile and plan, 45 minutes on implementation, 20 minutes on independent review and P0/P1 follow-up, and 15 minutes on verification and reporting. Start no new work after the 90-minute deadline. Use no more than two independent implementation subagents and deliver one small user-visible\nrelease-candidate outcome per sprint. Perform a provider readiness preflight before Clerk, database, storage, or other\nexternal work. Report release-candidate verified, implemented-but-unverified, remaining, and deferred status in plain English under three minutes, including implementation progress, blockers, next action, and How to test locally. Use the exact heading Onkar We need your help only when an owner-controlled external dependency needs action.",
+    ),
+  );
+});
+
 test("requires Terra planning and implementation routing plus Luna routine verification", () => {
   assert.throws(
     () =>
@@ -378,7 +403,25 @@ test("accepts the exact dry-run-first automation configuration", () => {
       mode: "dry-run-first",
       promptFile: ".agent/prompts/master-delivery-agent.md",
       reportDirectory: ".agent/reports/automation-runs",
+      sprintBudgetMinutes: 90,
+      maxImplementationAgents: 2,
+      reportReadLimitMinutes: 3,
     }),
+  );
+});
+
+test("rejects automation configurations without sprint reporting limits", () => {
+  assert.throws(
+    () =>
+      governance.validateAutomation({
+        name: "Planote Master Delivery Controller",
+        cadenceHours: 3,
+        timezone: "Europe/London",
+        mode: "dry-run-first",
+        promptFile: ".agent/prompts/master-delivery-agent.md",
+        reportDirectory: ".agent/reports/automation-runs",
+      }),
+    /Automation must preserve the sprint budget, implementation-agent limit, and report read limit/,
   );
 });
 

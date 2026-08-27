@@ -1,5 +1,5 @@
 schemaVersion: 1
-updatedAt: "2026-08-26T23:40:26.5900800+01:00"
+updatedAt: "2026-08-27T11:54:31.7575915+01:00"
 milestones:
   - id: M0-GOVERNANCE
     name: Delivery governance bootstrap
@@ -162,3 +162,15 @@ tasks:
       review:
         decision: approved
         report: .agent/reviews/REVIEW-TASK-011-002.md
+  - id: TASK-013
+    title: Enforce sprint delivery reporting
+    status: verified
+    acceptance: [AC-GOV-02, AC-GOV-03]
+    branch: codex/task-013-sprint-delivery-reporting
+    record: .agent/tasks/TASK-013-sprint-delivery-reporting.md
+    evidence:
+      tests: ["pnpm agent:test (35 passed)"]
+      build: "pnpm build (exit 0)"
+      review:
+        decision: approved
+        report: .agent/reviews/REVIEW-TASK-013-002.md

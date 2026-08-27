@@ -286,6 +286,32 @@ export function validatePrompt(name, prompt) {
     if (productFirstPlanning.some((pattern) => !pattern.test(prompt))) {
       throw new Error("Master prompt must require product-first planning controls");
     }
+    const sprintReporting = [
+      /90-minute delivery sprint/i,
+      /10 minutes[^.]{0,120}reconcile[^.]{0,120}plan/i,
+      /45 minutes[^.]{0,120}implementation/i,
+      /20 minutes[^.]{0,120}independent review[^.]{0,120}P0\/P1[^.]{0,120}follow-up/i,
+      /15 minutes[^.]{0,120}verification[^.]{0,120}reporting/i,
+      /no new work after the 90-minute deadline/i,
+      /no more than two independent implementation subagents/i,
+      /one small user-visible\s+release-candidate outcome per sprint/i,
+      /provider readiness preflight[^.]{0,160}before[^.]{0,160}Clerk, database, storage, or (?:other\s+)?external work/i,
+      /release-candidate verified/i,
+      /implemented-but-unverified/i,
+      /remaining/i,
+      /deferred/i,
+      /plain English/i,
+      /under three minutes/i,
+      /implementation progress/i,
+      /blockers/i,
+      /next action/i,
+      /How to test locally/,
+      /Onkar We need your help/,
+      /Onkar We need your help[^.]{0,160}only when[^.]{0,160}owner-controlled external/i,
+    ];
+    if (sprintReporting.some((pattern) => !pattern.test(prompt))) {
+      throw new Error("Master prompt must require the 90-minute delivery sprint contract");
+    }
   }
   return prompt;
 }
@@ -322,6 +348,15 @@ export function validateAutomation(automation) {
     automation?.promptFile === ".agent/prompts/master-delivery-agent.md" &&
     automation?.reportDirectory === ".agent/reports/automation-runs";
   if (!valid) throw new Error("Automation must run every 3 hours in Europe/London");
+  const sprintLimits =
+    automation?.sprintBudgetMinutes === 90 &&
+    automation?.maxImplementationAgents === 2 &&
+    automation?.reportReadLimitMinutes === 3;
+  if (!sprintLimits) {
+    throw new Error(
+      "Automation must preserve the sprint budget, implementation-agent limit, and report read limit",
+    );
+  }
   return automation;
 }
 

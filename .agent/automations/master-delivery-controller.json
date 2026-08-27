@@ -4,5 +4,8 @@
   "timezone": "Europe/London",
   "mode": "dry-run-first",
   "promptFile": ".agent/prompts/master-delivery-agent.md",
-  "reportDirectory": ".agent/reports/automation-runs"
+  "reportDirectory": ".agent/reports/automation-runs",
+  "sprintBudgetMinutes": 90,
+  "maxImplementationAgents": 2,
+  "reportReadLimitMinutes": 3
 }

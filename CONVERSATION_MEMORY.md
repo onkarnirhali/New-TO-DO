@@ -212,6 +212,12 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 > Newest entries first.
 
+### [2026-08-27] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Added the owner-approved 90-minute sprint and release-candidate reporting contract, then activated the unchanged three-hour Codex automation after independent approval.
+**Changed:** Master prompt, automation manifest/setup, progress template, validator/tests, TASK-013 records, and this session entry in `codex/task-013-sprint-delivery-reporting`.
+**Next:** The next sprint first preflights real Clerk test readiness; if ready, it finishes auth browser/build proof and review, otherwise it reports the exact owner help needed.
+**Notes:** Terra/high used TDD, Luna/medium ran routine gates, and Terra/high V2 review returned exact `approved` with P0/P1/P2/P3 = 0/0/0/0. The dirty primary/auth worktree remains untouched.
+
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
 **Did:** Reconciled TASK-001–TASK-010, AC-GOV-01–03, and M0 from approved immutable reviews and Git evidence in an isolated worktree. An independent first review found a P1 in the frozen-snapshot proof; the revision-2 byte-framed command reproduced its hash twice and a fresh independent Terra/high review returned exact `approved` with no findings.
 **Changed:** Governance ledger/registry, task lifecycle records, lifecycle plan/reports, review packets/reports, product memory, and this shared memory.

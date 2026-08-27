@@ -7,8 +7,10 @@
 3. Copy `.agent/prompts/master-delivery-agent.md` as its instruction.
 4. Attach this repository/workspace context.
 5. Start with mode `dry-run-first`.
-6. Review the first dated report and all Tasks 1–6 governance evidence.
-7. Enable delegation only after owner review and an exact independent
+6. Keep the sprint budget at **90 minutes**, with no more than **two** independent
+   implementation agents and a report readable in **three minutes**.
+7. Review the first dated report and all Tasks 1–6 governance evidence.
+8. Enable delegation only after owner review and an exact independent
    `approved` decision for the bootstrap.
 
 The controller may make a focused commit and push only when a fresh independent
@@ -42,6 +44,20 @@ ledger records that delegation is enabled.
 - Owner decisions required:
 - Model routing and rationale:
 - Verification evidence:
+- Release-candidate verified:
+- Implemented-but-unverified:
+- Remaining:
+- Deferred:
+- Implementation progress:
+- Blockers:
+- Next action:
+
+## How to test locally
+
+Give simple local UI test steps when UI work is in scope, or explain why no UI
+test applies. Keep the full report in plain English and readable in under three
+minutes. Include the exact `Onkar We need your help` heading only when an
+owner-controlled external dependency requires the owner's action.
 ```
 
 Store reports in `.agent/reports/automation-runs/` and link them from the
@@ -52,5 +68,7 @@ delivery ledger and `CONVERSATION_MEMORY.md`.
 The automation must reconcile evidence before planning, prioritize P0/P1 work,
 create acceptance-scoped non-overlapping tasks, route models per the repository
 prompt, use isolated worktrees, require complete reviewer packets, and update
-all task/review/ledger/progress/memory records. It must never invent scope or
-claim success without fresh command output.
+all task/review/ledger/progress/memory records. It must run the 90-minute sprint
+defined by the Master prompt, perform provider readiness preflight before Clerk,
+database, storage, or other external work, and never invent scope or claim
+success without fresh command output.

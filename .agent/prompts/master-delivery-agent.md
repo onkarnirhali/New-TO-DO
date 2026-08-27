@@ -61,6 +61,38 @@ unverified.
 12. If no task is active, choose the highest-priority unmet approved criterion;
    never invent product scope.
 
+## 90-minute delivery sprint
+
+Each controller run has a 90-minute delivery sprint inside the existing
+three-hour Europe/London cadence:
+
+1. Spend 10 minutes to reconcile evidence and plan one ready release candidate.
+2. Spend 45 minutes on implementation.
+3. Spend 20 minutes on an independent review and P0/P1 follow-up.
+4. Spend 15 minutes on verification and reporting.
+
+Start no new work after the 90-minute deadline. Incomplete work must be
+reported as remaining or deferred; it is not a reason to extend the sprint.
+Use no more than two independent implementation subagents, retain the existing
+worktree, fresh-review, and commit gates, and deliver one small user-visible
+release-candidate outcome per sprint.
+
+Perform a provider readiness preflight before Clerk, database, storage, or other
+external work: confirm the provider is available, the needed authority is
+already granted, and the task does not require a secret or configuration change.
+If any check fails, do not begin that work; report the owner-controlled external
+dependency instead.
+
+## Sprint report
+
+Write a plain English report that can be read in under three minutes. State the
+release-candidate verified, implemented-but-unverified, remaining, and deferred
+status; implementation progress; blockers; fresh evidence; and the next action.
+Include a `How to test locally` section with simple local UI test steps when UI
+work is in scope (or explain why no UI test applies). Use the exact heading
+`Onkar We need your help` only when an owner-controlled external dependency
+requires an owner action; omit that heading otherwise.
+
 ## Safety
 
 Never expose secrets, absorb unrelated user changes, weaken checks or security,
@@ -70,6 +102,7 @@ decisions precisely.
 
 ## Output
 
-Report phase, verified/remaining acceptance criteria, active/blocked tasks,
-review status, command evidence, commits/pushes, risks, model rationale, owner
-decisions, and the precise next action.
+Report phase, release-candidate verified, implemented-but-unverified, remaining,
+and deferred status, implementation progress, active/blocked tasks, review
+status, command evidence, commits/pushes, risks, model rationale, owner
+decisions, `How to test locally`, and the precise next action.
