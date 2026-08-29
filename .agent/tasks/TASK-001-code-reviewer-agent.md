@@ -1,10 +1,21 @@
 # TASK-001 — Create Code Reviewer Agent definition
 
-- Status: verified
-- Acceptance criteria: AC-GOV-REVIEW-01
+- Status: review
+- Acceptance criteria: AC-GOV-03
 - Owner: Master Delivery Agent
 - Assigned agent: Codex
 - Branch/worktree: `codex/code-reviewer-agent`
+- Model/effort: historical evidence unavailable
+- Complexity rationale: historical evidence unavailable
+- Escalation: historical evidence unavailable
+
+## Historical provenance
+
+- The original task record linked `AC-GOV-REVIEW-01`; the current delivery
+  ledger authoritatively maps TASK-001 to `AC-GOV-03`.
+- The original record did not preserve an implementer model/effort, complexity
+  rationale, or escalation record. Those fields must remain unavailable rather
+  than being reconstructed after the fact.
 
 ## Scope
 
@@ -64,15 +75,16 @@ never self-approves or makes hidden changes.
 
 ## Review result
 
-Independent specification review: approved with no findings.
+Historical independent specification review: approved with no findings.
 
 Independent quality review: initially identified missing bootstrap acceptance
 evidence, ambiguous commit/push wording, incomplete follow-up traceability,
 missing review provenance, and an overly rigid handoff phrase. All findings
 were corrected and the independent re-review approved with no P0–P3 findings.
 
-Reviewer decision: approved. Commit/push permitted: yes, subject to the
-non-protected-branch policy.
+The historical reviewer model/effort and standalone review report were not
+recorded under the current contract. Fresh Terra/high review of the amended
+contract is pending. Commit/push permission is currently no.
 
 ## Decisions and handoff
 

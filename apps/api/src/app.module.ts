@@ -7,6 +7,9 @@ import { DashboardsModule } from "./dashboards/dashboards.module.js";
 import { TasksModule } from "./tasks/tasks.module.js";
 import { NotesModule } from "./notes/notes.module.js";
 import { HealthController } from "./health/health.controller.js";
+import { AdminGuard } from "./auth/guards/admin.guard.js";
+import { AdminHealthController } from "./health/admin-health.controller.js";
+import { PlatformHealthService } from "./health/platform-health.service.js";
 
 /**
  * AppModule — root module. Import order:
@@ -24,6 +27,7 @@ import { HealthController } from "./health/health.controller.js";
     TasksModule,
     NotesModule,
   ],
-  controllers: [HealthController],
+  controllers: [HealthController, AdminHealthController],
+  providers: [AdminGuard, PlatformHealthService],
 })
 export class AppModule {}

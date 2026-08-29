@@ -166,6 +166,7 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 | Task | Owner | Status |
 |------|-------|--------|
+| Governance bootstrap lifecycle traceability (TASK-009) | Codex implementation agent | Local remediation and V4 review handoff prepared; awaiting fresh independent task-level review. |
 | Web frontend (Next.js) wired to real backend | Claude (autonomous loop) | App shell (top nav + sidebar) done with static placeholder data. Still needed: Clerk auth pages, real Kanban board wired to the Tasks/Dashboards API, Notes grid/editor, settings — none of these are built yet. |
 | Mobile app (Expo/React Native) | — | Not started — deferred until backend + web are solid |
 
@@ -210,6 +211,66 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 ## Session Log
 
 > Newest entries first.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-luna
+**Did:** Added the Agent OS run-metrics template, secret-free YAML schema, and first TASK-017/TASK-018 baseline report.
+**Changed:** `.agent/templates/run-metrics.md`, `.agent/metrics/delivery-metrics.yaml`, `.agent/reports/progress/2026-08-29-agent-os.md`, `.agent/README.md`.
+**Next:** Capture measured category minutes, queue depth, routes, escalations, and coding percentage on the next governed run.
+**Notes:** Baseline coding was approximately 10–28% of wall time; setup, serial verification, and review remediation were the main overheads. Agent OS is ready but has not been measured in production use. No secrets or commits/pushes.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Applied the final TASK-018 P1 lint correction by explicitly typing the S3 command mock input and return as `unknown`.
+**Changed:** `apps/api/src/health/platform-health.service.spec.ts` and refreshed TASK-018 evidence/freeze records.
+**Next:** Fresh independent Terra/high review remains required before any commit or push.
+**Notes:** Lint RED was the single `no-unsafe-return`; the production adapter-boundary regression stays intact. Focused 17/17 and full API 18/18 tests remain green.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Applied the fresh TASK-018 reviewer P1 corrections: the production R2 adapter forwards abort options, test fakes have safe request-option types, and Redis cleanup is synchronous.
+**Changed:** `apps/api/src/health/platform-health.service.{ts,spec.ts}` plus refreshed TASK-018 evidence/freeze records.
+**Next:** Fresh independent Terra/high review remains required before any commit or push.
+**Notes:** Adapter RED observed the omitted options; focused tests are 17/17 and full API tests 18/18. No external provider or user-data action occurred.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Remediated the TASK-018 reviewer P1: each database, Redis, and R2 readiness probe is bounded; R2 receives cancellation; and a never-settling component degrades only itself without delaying the compact response indefinitely.
+**Changed:** `apps/api/src/health/platform-health.service.{ts,spec.ts}` and the TASK-018 evidence, review packet, progress, API-memory, acceptance, and freeze records.
+**Next:** Fresh independent gpt-5.6-terra/high review must confirm P1 closure before any commit or push.
+**Notes:** TDD RED recorded the missing configured timeout seam; GREEN focused tests are 16/16 and full API tests 17/17. API lint/type-check/build, frozen install, governance validation/tests, and diff check are green. No provider or user-data action was taken.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Implemented TASK-018 / AC-OPS-02 in its isolated worktree: preserved public `GET /health`; added Clerk-authenticated, local-active-admin-only `GET /admin/health`; and reduced API/PostgreSQL/Redis/R2 probe results to compact secret-free statuses. Prepared the frozen implementation and reviewer packet; independent review remains pending.
+**Changed:** API health/guard/config/module files and focused Jest coverage; only `redis` and `@aws-sdk/client-s3`; TASK-018 governed acceptance, ledger, service-memory, progress, automation, review-packet, and freeze records.
+**Next:** Obtain a fresh independent gpt-5.6-terra/high read-only review of the frozen TASK-018 packet. Do not commit or push unless the Master gate has an exact approval and fresh green evidence.
+**Notes:** TDD RED/GREEN plus a fail-closed R2 mutation test are recorded. Full API Jest passed 13/13; API lint/type-check/build, frozen install, governance validation, and 32 governance tests passed before the final documentation/freeze rerun. No provider call, credential/configuration access, user-data mutation, or primary-checkout edit was made; the owner-controlled production-admin smoke remains outside scope.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Added and mechanically enforced product-first planning controls in the Master Delivery Agent contract: each plan now targets the highest-priority ready criterion, one user-visible outcome, a small file scope, explicit dependencies, and a verification stop condition; mobile, billing, and AI remain deferred.
+**Changed:** `.agent/prompts/master-delivery-agent.md`, governance validator/tests, TASK-010 ledger/task/review records, `CONVERSATION_MEMORY.md`.
+**Next:** Commit and push the independently approved TASK-010 change on `codex/governance-bootstrap`; then choose the next web-foundation criterion.
+**Notes:** Three fresh independent Terra/high reviews were recorded. Initial P1 findings on enforcement and traceability were remediated; final REVIEW-TASK-010-003 approved with no P0–P3 findings. Fresh governance tests pass 32/32; root lint/type-check/build pass with 10 known web warnings; root test has no configured package tasks.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Remediated TASK-009 lifecycle traceability in the isolated governance worktree. Added red/green fixture coverage for missing task records, task-ID/acceptance mismatch, missing escalation, and generic model routes; connected ledger task records to repository validation; reconciled historical evidence honestly; and prepared the initial P1 review record.
+**Changed:** `scripts/validate-agent-governance.{mjs,test.mjs}`, `.agent/delivery-ledger.yaml`, TASK-001–TASK-009 records, `.agent/reviews/**`, and this memory record.
+**Next:** Freeze V4 reviewer handoff and obtain a fresh independent `gpt-5.6-terra` / high task-level decision. No task is approved, verified, committed, or pushed by this work.
+**Notes:** Red run: 24 passed / 5 failed with expected missing-rejection assertions; green run: 29 passed / 0 failed. Final local gates passed; lint/build retain 10 existing web return-type warnings and root `pnpm test` has zero configured tasks.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Enforced the owner’s routing refinement in all executable role contracts: Terra/ultra for plans and major decisions, Terra/high for every implementation and independent review, and Luna/medium only for documented routine verification.
+**Changed:** `.agent/prompts/*`, `.agent/skills/promoted/*`, `.agent/memory/product.md`, `scripts/validate-agent-governance.*`; active Master Delivery automation now runs Terra/ultra.
+**Next:** Refresh the frozen reviewer packet to include this routing change, obtain fresh independent Terra/high approval, then rerun gates and commit only exact-approved work.
+**Notes:** The validator now rejects any role contract that omits one of the three required routes and still rejects Sol routing. Luna verification is explicitly non-implementing and non-approving.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Completed the repository-owned governance bootstrap implementation in an isolated worktree: policies, registry/ledger, templates, role prompts, skill lifecycle, automation contract, validator, baseline reports, and reviewer packets. Updated routing to Terra/Luna only and the active automation to Terra/high.
+**Changed:** `.agent/**`, root `package.json`, `pnpm-lock.yaml`, `scripts/validate-agent-governance.*`, and `CONVERSATION_MEMORY.md` on `codex/governance-bootstrap`; primary checkout untouched.
+**Next:** Obtain fresh independent Terra/high review for TASK-001–008, then rerun gates, commit, and push only exact-approved work.
+**Notes:** Governance tests pass 23/23; lint/type/build pass with 10 existing web warnings; root test has zero configured tasks. Three reviewer attempts were blocked by an account usage limit, so no review decision or commit/push exists.
+
+### [2026-08-26] Agent: Codex | Model: gpt-5.6-sol
+**Did:** Merged the approved Code Reviewer Agent contract into `main`, pushed it, and began the isolated governance bootstrap. Implemented TASK-002 governance policies and a presence validator test-first.
+**Changed:** `.agent/governance/*`, `.agent/tasks/TASK-002-governance-invariants.md`, `scripts/validate-agent-governance.*`, `CONVERSATION_MEMORY.md`.
+**Next:** Obtain independent review for TASK-002 before commit/push; then add acceptance registry and delivery ledger.
+**Notes:** Primary workspace user changes remain untouched. `pnpm test` baseline ran successfully but has zero discovered package tests.
 
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-sol
 **Did:** Connected the project to the owner-created private GitHub repository and added the root README on an isolated branch.

@@ -46,6 +46,13 @@ export class DashboardsService {
         title: dto.title,
         description: dto.description ?? null,
         position,
+        columns: {
+          create: [
+            { title: "To Do", position: 0 },
+            { title: "In Progress", position: 10 },
+            { title: "Done", position: 20 },
+          ],
+        },
       },
     });
   }

@@ -1,0 +1,58 @@
+schema_version: 1
+description: >-
+  Secret-free Agent OS delivery metrics. Minutes are measured elapsed wall time
+  for the run and may be unknown when historical evidence did not capture them.
+target:
+  coding_percentage:
+    minimum: 40
+    maximum: 50
+    unit: percent_of_recorded_wall_time
+definitions:
+  coding_percentage: coding_minutes / recorded_wall_clock_minutes * 100
+  queue_depth: completed_tickets_waiting_for_independent_review
+  route: model_identifier_and_reasoning_effort
+runs:
+  - run_id: baseline-task-017-task-018
+    date: "2026-08-29"
+    mode: historical-baseline
+    source_records:
+      - .agent/tasks/TASK-017-dashboard-default-columns.md
+      - .agent/reports/progress/2026-08-29-platform-health.md
+    minutes:
+      planning: unknown
+      coding: unknown
+      testing: unknown
+      review: unknown
+      remediation: unknown
+      documentation: unknown
+      waiting: unknown
+      recorded_wall_clock: unknown
+    tickets:
+      started: 2
+      completed: 0
+      reworked: 1
+    queue_depth:
+      at_start: unknown
+      at_end: unknown
+    model_routes:
+      - model: gpt-5.6-terra
+        effort: high
+        work_types: [implementation, verification, independent-review]
+        ticket_ids: [TASK-017, TASK-018]
+    escalations: []
+    coding_percentage:
+      observed_minimum: 10
+      observed_maximum: 28
+      target_minimum: 40
+      target_maximum: 50
+      status: below_target
+    overheads:
+      - setup
+      - serial_verification
+      - review_remediation
+    notes: >-
+      Historical task evidence reports coding at approximately 10–28% of wall
+      time. Exact category minutes and queue depth were not captured. The main
+      overheads were setup, serial verification, and review remediation. This
+      is a baseline only; the Agent OS is ready for the next run but has not
+      yet been measured in production use.

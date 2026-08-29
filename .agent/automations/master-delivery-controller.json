@@ -1,0 +1,8 @@
+{
+  "name": "Planote Master Delivery Controller",
+  "cadenceHours": 3,
+  "timezone": "Europe/London",
+  "mode": "dry-run-first",
+  "promptFile": ".agent/prompts/master-delivery-agent.md",
+  "reportDirectory": ".agent/reports/automation-runs"
+}
