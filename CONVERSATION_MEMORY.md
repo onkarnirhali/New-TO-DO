@@ -212,6 +212,12 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 > Newest entries first.
 
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-luna
+**Did:** Added the Agent OS run-metrics template, secret-free YAML schema, and first TASK-017/TASK-018 baseline report.
+**Changed:** `.agent/templates/run-metrics.md`, `.agent/metrics/delivery-metrics.yaml`, `.agent/reports/progress/2026-08-29-agent-os.md`, `.agent/README.md`.
+**Next:** Capture measured category minutes, queue depth, routes, escalations, and coding percentage on the next governed run.
+**Notes:** Baseline coding was approximately 10–28% of wall time; setup, serial verification, and review remediation were the main overheads. Agent OS is ready but has not been measured in production use. No secrets or commits/pushes.
+
 ### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
 **Did:** Applied the final TASK-018 P1 lint correction by explicitly typing the S3 command mock input and return as `unknown`.
 **Changed:** `apps/api/src/health/platform-health.service.spec.ts` and refreshed TASK-018 evidence/freeze records.

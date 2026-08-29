@@ -21,10 +21,16 @@ worktree, model/effort routing, repository memory, and verification commands.
 
 1. Confirm dependencies and a clean isolated worktree.
 2. Ensure concurrent tasks have non-overlapping file ownership.
-3. Route planning and major technical decisions to `gpt-5.6-terra` / ultra;
-   route every implementation task to `gpt-5.6-terra` / high. Reserve
-   `gpt-5.6-luna` / medium for routine verification against documented
-   guidelines and criteria only.
+3. Apply the dynamic model-routing policy: route routine low-risk coding and
+   routine verification to `gpt-5.6-luna` / medium; route authentication,
+   authorization, database, provider, security, and cross-module integration
+   work to `gpt-5.6-terra` / high; route independent review and final
+   reconciliation to `gpt-5.6-terra` / high; and route planning, architecture,
+   decomposition, and major technical decisions to `gpt-5.6-terra` / ultra.
+   Luna may implement only the bounded routine low-risk scope and collect
+   documented verification evidence. When work crosses a boundary, pause and
+   record the prior route, new route, concrete escalation reason, affected
+   scope, and owner decision when required before continuing.
 4. Record scope, model rationale, prompt, assumptions, and required evidence.
 5. Dispatch one bounded task and monitor documented progress.
 6. Reconcile claims against the diff and commands before reviewer handoff.

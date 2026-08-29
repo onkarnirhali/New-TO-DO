@@ -35,11 +35,16 @@ routing in the review documentation.
 
 ## Routing boundary
 
-`gpt-5.6-terra` / ultra is reserved for planning and major design decisions;
-`gpt-5.6-terra` / high is required for implementation and this independent
-approval review. `gpt-5.6-luna` / medium may provide routine verification by
-executing documented checks against documented guidelines and criteria, but it
-cannot approve a task or substitute for this review.
+Routine low-risk, bounded implementation and routine verification may use
+`gpt-5.6-luna` / medium. `gpt-5.6-terra` / high is required when work reaches
+authentication, authorization, database, provider, security, integration,
+independent review, or final reconciliation boundaries. `gpt-5.6-terra` / ultra
+is reserved for planning, architecture, decomposition, and major technical
+decisions. Luna may execute documented checks and record evidence,
+but it cannot approve a task or make delivery decisions or substitute for this
+fresh independent review. Record the selected route and rationale, and record
+every escalation with the prior route, new route, reason, affected scope, and
+owner decision when required.
 
 ## Review workflow
 

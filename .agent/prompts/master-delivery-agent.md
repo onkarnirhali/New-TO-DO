@@ -24,16 +24,49 @@ unverified.
 
 ## Model routing
 
-- Use `gpt-5.6-terra` / ultra for planning, architecture, acceptance-criteria
-  design, decomposition, major technical decisions, and controller reconciliation.
-- Use `gpt-5.6-terra` / high for every implementation task, including focused
-  code changes, multi-file integration, debugging, and security-sensitive work.
-- Use `gpt-5.6-luna` / medium only for routine verification: execute documented
-  checks and compare their output to documented guidelines and criteria. Luna
-  records evidence but cannot approve work, make delivery decisions, or replace
-  an independent review.
-- Every independent code review uses fresh `gpt-5.6-terra` / high.
-- Record rationale and escalation; never choose a weaker model merely for cost.
+Follow `.agent/policies/model-routing.md` as the source of truth. Use
+`gpt-5.6-luna` / medium for routine bounded coding and routine verification
+only. Use `gpt-5.6-terra` / high for authentication, authorization, database,
+provider, security, integration, independent review, and controller
+reconciliation. Use `gpt-5.6-terra` / ultra for architecture, decomposition,
+acceptance-criteria design, and major technical decisions. Every independent
+review is a fresh Terra/high review. Luna records evidence but cannot approve
+work or make delivery decisions. Record model rationale and every escalation
+with prior route, new route, reason, and owner decision when required; never
+downgrade or silently cross a boundary.
+
+## Five-slot operating mix
+
+The default operating mix is five total slots: `3 coding + 1 verifier + 1
+reviewer`. Coding slots use the routing policy independently; the verifier uses
+Luna/medium for routine checks or escalates as required; the reviewer is always
+fresh Terra/high and read-only. Do not exceed five active slots or allow two
+coders to edit overlapping scopes. Handoff-ready is the earliest safe reuse
+point, subject to `.agent/policies/rolling-scheduler.md` and review-queue
+protections. The review queue may contain at most two completed tickets; when it
+reaches two, stop adding coding work and convert capacity to verification,
+review, freeze, or reconciliation support.
+
+Before starting new coding, follow the rolling scheduler algorithm: inspect the
+ready queue, compute the time until the next three-hour automation run, and
+apply the strict guard `time_until_next_run > 45 minutes`. Only when the guard,
+available-slot, review-queue, non-overlap, dependency, and scope-fit checks all
+pass may the next bounded ticket be assigned. Scope must fit reaching
+`handoff-ready` within the window. At 45 minutes or less, assign no new coding
+and finish verification, review, reconciliation, documentation, or freeze
+work. A developer may reuse capacity only after `handoff-ready`, and every new
+ticket starts in a new dedicated worktree while the prior frozen handoff is
+verified/reviewed independently. Record the queue snapshot, calculation,
+guard result, decision, route, and worktree in run evidence.
+
+When a task is blocked, stop its coding slot and clarify, escalate, or
+decompose it; never silently retry, broaden scope, or consume a slot without a
+resolved dependency. Escalate security-sensitive code, auth/authorization,
+provider access, database changes, cross-module integration, unexpected scope
+growth, and repeated test/review failure. Each escalation records the prior
+route, new route, concrete reason, affected acceptance IDs/files, owner decision
+when needed, timestamp, and next action. The rolling scheduler policy is the
+authoritative detailed procedure.
 
 ## Control loop
 

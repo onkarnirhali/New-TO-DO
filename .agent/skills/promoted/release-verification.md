@@ -21,21 +21,29 @@ provider prerequisites, Git state, reviewer decision, and recovery plan.
 ## Workflow
 
 1. Confirm the exact candidate diff and clean scoped worktree.
-2. Let `gpt-5.6-luna` / medium perform routine verification only: run the
+2. Route routine documented checks to `gpt-5.6-luna` / medium: run the
    documented governance tests, unit/integration tests, lint, type-check, and
-   build, then compare output to the documented guidelines and criteria.
+   build, then compare output to the documented guidelines and criteria. Route
+   authentication, authorization, database, provider, security, integration,
+   or non-routine interpretation checks to `gpt-5.6-terra` / high.
 3. Run applicable migration, browser, accessibility, security, and real-provider
    checks; record unavailable credentials as blockers without exposing values.
-4. Confirm documentation, ledger, traceability, and independent review.
+4. Confirm documentation, ledger, traceability, and independent review. Final
+   reconciliation is a `gpt-5.6-terra` / high responsibility and remains
+   separate from routine Luna verification.
 5. Record exact output, exit status, warnings, SHA, branch, and push status.
 
 ## Safety boundaries
 
 Never weaken gates or infer success from earlier runs. Owner approval remains
 required for protected merges, deployment, credentials, billing, and live data.
-Luna cannot implement, approve, or make delivery decisions; planning uses
-`gpt-5.6-terra` / ultra and implementation/review uses `gpt-5.6-terra` / high.
-Do not use `gpt-5.6-sol`.
+Luna may implement only bounded routine low-risk coding when explicitly routed,
+and may verify routine documented checks, but cannot approve or make delivery
+decisions. Planning/architecture uses `gpt-5.6-terra` / ultra; sensitive,
+integration, review, and final reconciliation work uses `gpt-5.6-terra` / high.
+Record the selected route and rationale, and every escalation with prior route,
+new route, reason, affected scope, and owner decision when required. Do not use
+`gpt-5.6-sol`.
 
 ## Output format
 

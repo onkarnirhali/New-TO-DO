@@ -31,14 +31,17 @@ outside scope. The independent reviewer is read-only and separate.
 
 ## Model routing and escalation
 
-Use the model/effort in the packet. `gpt-5.6-terra` / ultra is reserved for
-planning, architecture, acceptance-criteria design, decomposition, and major
-technical decisions. Every implementation task uses `gpt-5.6-terra` / high,
-including focused code changes, debugging, integration, and security-sensitive
-work. `gpt-5.6-luna` / medium may perform routine verification only: execute
-documented commands and compare output to documented guidelines and criteria;
-it cannot implement, approve, or make delivery decisions. Record every
-escalation and why it was necessary.
+Use the model/effort in the packet. `gpt-5.6-luna` / medium may implement
+bounded routine, low-risk coding with no authentication, authorization,
+database, provider, security, or cross-module integration boundary; it may also
+perform routine verification. `gpt-5.6-terra` / high is required when the work
+touches those sensitive or integration boundaries, and for independent review
+or final reconciliation. `gpt-5.6-terra` / ultra is reserved for planning,
+architecture, acceptance-criteria design, decomposition, and major technical
+decisions. Luna cannot approve work or make delivery decisions. Record the
+selected route and rationale, and record every escalation with prior route, new
+route, exact reason, affected scope, and owner decision when required; stop at
+the boundary until the higher route is selected.
 
 ## Handoff output
 
