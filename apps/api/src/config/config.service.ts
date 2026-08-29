@@ -52,4 +52,16 @@ export class AppConfigService {
   get r2BucketName(): string {
     return this.config.get("r2.bucketName", { infer: true });
   }
+
+  get r2AccountId(): string {
+    return this.config.get("r2.accountId", { infer: true });
+  }
+
+  get r2AccessKeyId(): string {
+    return this.config.get("r2.accessKeyId", { infer: true });
+  }
+
+  get r2SecretAccessKey(): string {
+    return this.config.get("r2.secretAccessKey", { infer: true });
+  }
 }

@@ -212,6 +212,30 @@ A full design has been built by Claude Design. Located in `new-todo/project/`.
 
 > Newest entries first.
 
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Applied the final TASK-018 P1 lint correction by explicitly typing the S3 command mock input and return as `unknown`.
+**Changed:** `apps/api/src/health/platform-health.service.spec.ts` and refreshed TASK-018 evidence/freeze records.
+**Next:** Fresh independent Terra/high review remains required before any commit or push.
+**Notes:** Lint RED was the single `no-unsafe-return`; the production adapter-boundary regression stays intact. Focused 17/17 and full API 18/18 tests remain green.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Applied the fresh TASK-018 reviewer P1 corrections: the production R2 adapter forwards abort options, test fakes have safe request-option types, and Redis cleanup is synchronous.
+**Changed:** `apps/api/src/health/platform-health.service.{ts,spec.ts}` plus refreshed TASK-018 evidence/freeze records.
+**Next:** Fresh independent Terra/high review remains required before any commit or push.
+**Notes:** Adapter RED observed the omitted options; focused tests are 17/17 and full API tests 18/18. No external provider or user-data action occurred.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Remediated the TASK-018 reviewer P1: each database, Redis, and R2 readiness probe is bounded; R2 receives cancellation; and a never-settling component degrades only itself without delaying the compact response indefinitely.
+**Changed:** `apps/api/src/health/platform-health.service.{ts,spec.ts}` and the TASK-018 evidence, review packet, progress, API-memory, acceptance, and freeze records.
+**Next:** Fresh independent gpt-5.6-terra/high review must confirm P1 closure before any commit or push.
+**Notes:** TDD RED recorded the missing configured timeout seam; GREEN focused tests are 16/16 and full API tests 17/17. API lint/type-check/build, frozen install, governance validation/tests, and diff check are green. No provider or user-data action was taken.
+
+### [2026-08-29] Agent: Codex | Model: gpt-5.6-terra
+**Did:** Implemented TASK-018 / AC-OPS-02 in its isolated worktree: preserved public `GET /health`; added Clerk-authenticated, local-active-admin-only `GET /admin/health`; and reduced API/PostgreSQL/Redis/R2 probe results to compact secret-free statuses. Prepared the frozen implementation and reviewer packet; independent review remains pending.
+**Changed:** API health/guard/config/module files and focused Jest coverage; only `redis` and `@aws-sdk/client-s3`; TASK-018 governed acceptance, ledger, service-memory, progress, automation, review-packet, and freeze records.
+**Next:** Obtain a fresh independent gpt-5.6-terra/high read-only review of the frozen TASK-018 packet. Do not commit or push unless the Master gate has an exact approval and fresh green evidence.
+**Notes:** TDD RED/GREEN plus a fail-closed R2 mutation test are recorded. Full API Jest passed 13/13; API lint/type-check/build, frozen install, governance validation, and 32 governance tests passed before the final documentation/freeze rerun. No provider call, credential/configuration access, user-data mutation, or primary-checkout edit was made; the owner-controlled production-admin smoke remains outside scope.
+
 ### [2026-08-26] Agent: Codex | Model: gpt-5.6-terra
 **Did:** Added and mechanically enforced product-first planning controls in the Master Delivery Agent contract: each plan now targets the highest-priority ready criterion, one user-visible outcome, a small file scope, explicit dependencies, and a verification stop condition; mobile, billing, and AI remain deferred.
 **Changed:** `.agent/prompts/master-delivery-agent.md`, governance validator/tests, TASK-010 ledger/task/review records, `CONVERSATION_MEMORY.md`.

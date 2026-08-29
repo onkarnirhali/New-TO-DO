@@ -263,9 +263,12 @@ criteria:
     feature: Platform health
     criterion: Admin health reports API, database, and storage readiness without exposing secrets.
     priority: pre-launch
-    status: not-started
+    status: implemented
     verification: [api-test, security-review]
-    evidence: []
+    evidence:
+      - TASK-018 focused and full API Jest evidence
+      - .agent/reviews/packets/TASK-018-freeze.md
+    implementationNotes: Admin-only GET /admin/health returns compact API, database, Redis, and R2 readiness statuses. Each dependency probe is deadline-bounded; R2 is aborted on expiry. Independent security review remains required before verification.
   - id: AC-OPS-03
     feature: Clerk webhooks
     criterion: Verified webhook signatures synchronize and deactivate users without starter-data races or duplication.

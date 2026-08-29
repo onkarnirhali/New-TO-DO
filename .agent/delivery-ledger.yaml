@@ -96,3 +96,9 @@ tasks:
       review:
         decision: approved
         report: .agent/reviews/REVIEW-TASK-010-003.md
+  - id: TASK-018
+    title: Deliver admin platform health endpoint
+    status: active
+    acceptance: [AC-OPS-02]
+    branch: codex/task-018-platform-health
+    record: .agent/tasks/TASK-018-platform-health.md

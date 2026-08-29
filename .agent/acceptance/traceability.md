@@ -25,6 +25,7 @@ API, web, provider, accessibility, or independent-review evidence is absent.
 - Dashboards and Kanban: `apps/api/src/dashboards/`, `apps/web/src/app/app/`.
 - Tasks and reminders: `apps/api/src/tasks/`.
 - Notes: `apps/api/src/notes/`.
+- Platform health: `apps/api/src/health/`, guarded by `apps/api/src/auth/guards/admin.guard.ts`.
 - Product criteria: `docs/planning/07-master-delivery-plan.md`.
 
 Task records must list their acceptance IDs, and review records must repeat the
